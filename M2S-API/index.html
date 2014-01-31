@@ -26,47 +26,60 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-m2s-api" class="anchor" href="#welcome-to-m2s-api"><span class="octicon octicon-link"></span></a>Welcome to M2S API.</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>This api allows you to create instant messaging applications without resorting to servers. It works in most environments as: php, android, iphone, java, etc ... but we will focus in javascript</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<h3>
+<a name="login-user" class="anchor" href="#login-user"><span class="octicon octicon-link"></span></a>Login user</h3>
+<p>Most importantly, log in, m2s requires the user to have the session open http://m2s.es/app so there will be times that we will have to log in</p>
+<p>To do this, we must call to <code>http://m2s.es/app/api/connect/login.php</code> with the gets <code>user</code> and <code>passmd5</code>.</p>
+The gets:
+<ul>
+	<li><code>user</code> is the user name</li>
+	<li><code>passmd5</code> is the password of user in md5</li>
+</ul>
+<p>
+Response:<br>
+The response is in json and the status of the request is <code>message</code> if the request is accepted appear <code>data</code> with the user data. For example:</p>
+<ul>
+    <li>If you have the session in m2s.es opened: <code>{"mensaje":"e1"}</code></li>
+	<li>If the gets aren't: <code>{"mensaje":"e2"}</code></li>
+	<li>If the data aren't correct: <code>{"mensaje":"e3"}</code></li>
+	<li>If the data are correct: <code>{"mensaje":"OK","data":{"id":"","email":"","genre":""}}</code></li>
+</ul>
+<p>In javascript could be:</p>
+<pre><code>var usern = '' #Username of user
+var pass = '' #Password of user in md5
+$.ajax({
+     type: "GET",
+     jsonpCallback:'jpCallback',
+     crossDomain: true,
+     url: "http://m2s.es/app/api/connect/login.php",
+     data: "user="+usern+"&passmd5="+pass,
+     dataType: 'jsonp', #The petition need this for obtain the response
+     success: function(result) {
+        #When the petition has been processed.
+        if(result.mensaje == 'OK'){
+          #If the petition is correct
+          id = result.data.id #Example of data of the user
+        }
+        [...] #More response
+     }
+})
 </code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
+<h5>More coming...</h3>
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
+<p>Are you have any problem? Contact me at <a href="mailto:xumet12@icloud.com">xumet12@icloud.com</a></p>
       </section>
     </div>
 
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+        <p>M2S is an app created by <a href="http://twitter.com/xumet12">@xumet12</a> and your api is public but you must mention M2S in your apps</p>
       </footer>
     </div>
-
-    
-
   </body>
 </html>
