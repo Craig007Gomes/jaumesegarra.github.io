@@ -6,49 +6,81 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="jaumesegarra.github.io : " />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link href="stylesheets/navbar-fixed-top.css" rel="stylesheet">
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="stylesheets/sticky-footer.css">
     <title>M2S API - Jaume Segarra</title>
   </head>
 
   <body>
 
     <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <h1 id="project_title">M2S API</h1>
-          <h2 id="project_tagline"></h2>
-
-        </header>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">M2S API</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#login">Login</a></li>
+                <li class="dropdown-header">More coming...</li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Obtain <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#user-info">Profile info</a></li>
+                <li class="dropdown-header">More coming...</li>
+              </ul>
+            </li>
+            <li><a href="#help">Help</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://m2s.es/app" target="_blank">Login in M2S</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
 
     <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="welcome-to-m2s-api" class="anchor" href="#welcome-to-m2s-api"><span class="octicon octicon-link"></span></a>Welcome to M2S API.</h3>
-
-<p>This api allows you to create instant messaging applications without resorting to servers. It works in most environments as: php, android, iphone, java, etc ... but we will focus in javascript. Download full api example in javascript <a href="https://github.com/jaumesegarra/M2S">here</a></p>
-
-<h3>
-<a name="login-user" class="anchor" href="#login-user"><span class="octicon octicon-link"></span></a>Login user</h3>
-<p>Most importantly, log in, m2s requires the user to have the session open http://m2s.es/app so there will be times that we will have to log in</p>
-<p>To do this, we must call to <code>http://m2s.es/app/api/connect/login.php</code> with the gets <code>user</code> and <code>passmd5</code>.</p>
-The gets:
-<ul>
-	<li><code>user</code> is the user name</li>
-	<li><code>passmd5</code> is the password of user in md5</li>
-</ul>
-<p>
-Response:<br>
-The response is in json and the status of the request is <code>message</code> if the request is accepted appear <code>data</code> with the user data. For example:</p>
-<ul>
-    <li>If you have the session in m2s.es opened: <code>{"mensaje":"e1"}</code></li>
-	<li>If the gets aren't: <code>{"mensaje":"e2"}</code></li>
-	<li>If the data aren't correct: <code>{"mensaje":"e3"}</code></li>
-	<li>If the data are correct: <code>{"mensaje":"OK","data":{"id":"","email":"","genre":""}}</code></li>
-</ul>
-<p>In javascript could be:</p>
+    <div id="wrap">
+    <div class="container">
+    <div class="jumbotron" id="welcome">
+      <h1>Welcome to M2S API</h1>
+      <p>This api allows you to create instant messaging applications without resorting to servers. It works in most environments as: php, android, iphone, java, etc ... but we will focus in javascript. Download full api example in javascript</p> <p><a class="btn btn-primary btn-lg" role="button" href="https://github.com/jaumesegarra/M2S" target="_blank">Download</a></p>
+    </div>
+    <div id="login">
+      <h3>Login user</h3>
+      <p>Most importantly, log in, m2s requires the user to have the session open http://m2s.es/app so there will be times that we will have to log in. To do this, we must call to <code>http://m2s.es/app/api/connect/login.php</code> with the gets <code>user</code> and <code>passmd5</code>.</p>
+      <p>
+      <h5>The gets:</h5>
+      <ul>
+	   <li><code>user</code> is the user name</li>
+	   <li><code>passmd5</code> is the password of user in md5</li>
+      </ul>
+      </p>
+      <p>
+      <h5>Response:</h5>
+      The response is in json and the status of the request is <code>message</code> if the request is accepted appear <code>data</code> with the user data. For example:
+      <ul>
+       <li>If you have the session in m2s.es opened: <code>{"mensaje":"e1"}</code></li>
+	   <li>If the gets aren't: <code>{"mensaje":"e2"}</code></li>
+	   <li>If the data aren't correct: <code>{"mensaje":"e3"}</code></li>
+	   <li>If the data are correct: <code>{"mensaje":"OK","data":{"id":"","email":"","genre":""}}</code></li>
+      </ul>
+      </p>
+     <p>
+      <h5>In javascript could be:</h5>
 <pre><code>var usern = '' #Username of user
 var pass = '' #Password of user in md5
 $.ajax({
@@ -68,18 +100,66 @@ $.ajax({
      }
 })
 </code></pre>
-<h5>More coming...</h3>
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-<p>Are you have any problem? Contact me at <a href="mailto:xumet12@icloud.com">xumet12@icloud.com</a></p>
-      </section>
-    </div>
+</p>
+</div>
+<div id="user-info">
+<h3>Obtain users info <small>Download examples don't available yet</small></h3>
+<p>There are 2 ways to get the user information:</p>
+<ul>
+  <li>The first method will return less information because its function is to search for users</li>
+  <li>It check if you're friend of the user, If you are it, you receive his username, id and last connection, if you aren't it, you receive all your data public</li>
+</ul>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#user-info-tab1" data-toggle="tab">Option 1</a></li>
+  <li><a href="#user-info-tab2" data-toggle="tab">Option 2</a></li>
+</ul>
 
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="user-info-tab1">
+  <br>
+	  <p>With this method you obtain the id,username and profile image of user; and the state. For use you have establish connection to: <code>http://m2s.es/app/api/profileinfo.xml</code> and the get <code>username</code> with the name of user.</p>
+	  <p>This method is perfect for find the users by username, check if it exist and obtain his id for send friendship petition later</p>
+	  <h5>Response:</h5>
+	  <ul>
+		  <li><code>state</code>: 
+		     <ul>
+		       <li>If the user isn't your friend will be '1'</li>
+		       <li>If the user is your friend will be '2'</li>
+		       <li>If the user doesn't exist will be '3'</li>
+		       <li>If you are thy will be '4'</li> 
+		       <li>If the user has you blocked or not accepted your friendship petition yet will be '5'</li>
+		  </ul>
+	      </li>
+	      <li><code>id</code>: His id (This is essential if you want further consultation about the user)</li>
+	      <li><code>username</code>: His username</li>
+	      <li><code>imagein</code>: Profile image of the user</li>
+	  </ul>
+  </div>
+  <div class="tab-pane fade" id="user-info-tab2"><br>Coming...</div>
+</div>
+
+</div>
+<div id="help">
+<h3>Support or Contact</h3>
+<p>Are you have any problem? Contact me at <a href="mailto:xumet12@icloud.com">xumet12@icloud.com</a></p>
+</div>
+</div>
+</div>
     <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p>M2S is an app created by <a href="http://twitter.com/xumet12">@xumet12</a> and your api is public but you must mention M2S in your apps</p>
-      </footer>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted">M2S is an app created by <a href="http://twitter.com/xumet12">@xumet12</a> and your api is public but you must mention M2S in your apps</p>
+      </div>
     </div>
+  <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="javascripts/bootstrap.min.js"></script>
+  <script src="javascripts/tab.js"></script>
+  <script>
+	$('#myTab a').click(function (e) {
+     e.preventDefault()
+     $(this).tab('show')
+    })
+  </script>
   </body>
 </html>
