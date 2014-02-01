@@ -33,6 +33,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#login">Login</a></li>
+                <li><a href="#add-friend">Add friend</a></li>
                 <li class="dropdown-header">More coming...</li>
               </ul>
             </li>
@@ -72,7 +73,7 @@
       </p>
       <p>
       <h5>Response:</h5>
-      The response is in json and the status of the request is <code>message</code> if the request is accepted appear <code>data</code> with the user data. For example:
+      The response is in json and the status of the request is <code>mensaje</code> if the request is accepted appear <code>data</code> with the user data. For example:
       <ul>
        <li>If you have the session in m2s.es opened: <code>{"mensaje":"e1"}</code></li>
 	   <li>If the gets aren't: <code>{"mensaje":"e2"}</code></li>
@@ -102,6 +103,19 @@ $.ajax({
 })
 </code></pre>
 </p>
+</div>
+<div id="add-friend">
+<h3>Add friend <small>Download examples don't available yet</small></h3>
+<p>For add friends, you need do a get to <code>http://m2s.es/app/api/connect/addfriend.php</code> and <code>id</code> that will be the user id. </p>
+<p>The response, as always, will be in json and the response <code>mensaje</code> could be:</p>
+<ul>
+	<li><code>ok</code>: If the request friendship is sent</li>
+	<li><code>e1</code>: If the user doesn't exist</li>
+	<li><code>e2</code>: If you don't login in http.//m2s.es/app</li>
+	<li><code>e3</code>: If you has sent a request friendship before</li>
+	<li><code>e4</code>: Error to connect</li>
+	<li><code>e5</code>: You are the same</li>
+</ul>
 </div>
 <div id="user-info">
 <h3>Obtain users info <small>Download examples don't available yet</small></h3>
