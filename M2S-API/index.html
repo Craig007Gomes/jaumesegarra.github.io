@@ -33,6 +33,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#login">Login</a></li>
+                <li><a href="#sign-up">Sign up</a></li>
                 <li><a href="#add-friend">Add friend</a></li>
                 <li class="dropdown-header">More coming...</li>
               </ul>
@@ -102,6 +103,35 @@ $.ajax({
      }
 })
 </code></pre>
+</p>
+</div>
+<div id="sign-up">
+<h3>Sign Up <small>Download examples don't available yet</small></h3>
+<p>You need connect to <code>http://m2s.es/app/api/connect/register.php</code> and these gets:</p>
+<ul>
+	<li><code>usuario</code>* :This is the name of the user, the username mustn't find in the database of M2S yet and it mustn't contain spaces</li>
+	<li><code>genero</code>* : Must be male or female</li>
+	<li><code>email</code>* : Email of the user</li>
+	<li><code>password</code>* : The password mustn't be codified, M2S will codify it in MD5 later</li>
+	<li><code>passwordc</code>* : It must be the same password of field <code>password</code></li>
+	<li><code>cumple</code>* : This is the birthday of the user. It must be in format yyyy-mm-dd</li>
+	<li><code>telefono</code>: This is the phone number of the user.</li>
+</ul>
+The fields with * are required
+<p>
+<p>
+ <h5>Response:</h5>
+ As always, the response are in json in the field <code>mensaje</code>, that can be:
+</p>
+ <ul>
+  <li><code>e1</code>: There an user login in M2S</li>
+  <li><code>e2</code>: The fields <code>password</code> and <code>passwordc</code> aren't the same</li>
+  <li><code>e3</code>: The username has been registered in M2S before</li>
+  <li><code>e4</code>: The email has been registered in M2S before</li>
+  <li><code>e5</code>: Error of MYSQL</li>
+  <li><code>e6</code>: Required fields hasn't been introduced</li>
+  <li><code>ok</code>: The user has registered correctly</li>
+ </ul>
 </p>
 </div>
 <div id="add-friend">
