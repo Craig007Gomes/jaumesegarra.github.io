@@ -1,0 +1,17 @@
+body {
+  overflow-x: hidden
+}
+
+.navbar-static-top {
+  margin-bottom: 19px;
+}
+.scrollup{
+    width:40px;
+    height:40px;
+    opacity:0.3;
+    position:fixed;
+    bottom:50px;
+    right:50px;
+    display:none;
+    background: url('icon_top.png') no-repeat;
+}
