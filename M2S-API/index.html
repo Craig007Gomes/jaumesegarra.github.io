@@ -36,6 +36,7 @@
                 <li><a href="#login">Login</a></li>
                 <li><a href="#sign-up">Sign up</a></li>
                 <li><a href="#add-friend">Add friend</a></li>
+                <li><a href="#write-message">Write a message</a></li>
                 <li class="dropdown-header">More coming...</li>
               </ul>
             </li>
@@ -145,6 +146,32 @@ The fields with * are required
 	<li><code>e3</code>: If you has sent a request friendship before</li>
 	<li><code>e4</code>: Error to connect</li>
 	<li><code>e5</code>: You are the same</li>
+</ul>
+</div>
+<div id="write-message">
+<h3>Write a message</h3>
+<p>For write a message, you must connect to:</p>
+<ul>
+ <li>If you send the message to a friend: <code>http://m2s.es/app/api/connect/chat.php</code></li>
+ <li>If you send the message to a group: <code>http://m2s.es/app/api/connect/chat-gr.php</code></li>
+</ul>
+<p>and the gets:</p>
+<ul>
+    <li><code>id</code>: If you send it to your friend will be the id of your friend, if you send it to a group will be the id of this group</li>
+	<li><code>txt</code>: It's the field of the message. This get is required</li>
+	<li><code>map</code>: This field aren't mandatory, it is for save your location and send it to your friend. The format of the text must in html</li>
+</ul>
+<p>The response will be <code>mensaje</code> and could be:</p>
+<ul>
+	<li><code>Operation Succesfully!</code>: The message has been send to your friend</li>
+	<li><code>TXT empty</code>: This field are empty.</li>
+	<li><code>Not GET</code>: There aren't a get id</li>
+	<li>If the user isn't his friend or not pertain to this group:
+	 <ul>
+	  <li>If you send the message to a friend:<code>Not Friend request</code></li>
+	  <li>If you send the message to a group:<code>You are not of this group</code></li>
+	 </ul>
+	<li><code>Not login!</code>: The user session is expired</li>
 </ul>
 </div>
 <div id="user-info">
