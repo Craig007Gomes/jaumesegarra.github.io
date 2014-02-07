@@ -159,7 +159,7 @@ The fields with * are required
 <ul>
     <li><code>id</code>: If you send it to your friend will be the id of your friend, if you send it to a group will be the id of this group</li>
 	<li><code>txt</code>: It's the field of the message. This get is required</li>
-	<li><code>map</code>: This field aren't mandatory, it is for save your location and send it to your friend. The format of the text must in html</li>
+	<li><code>map</code>: This field aren't mandatory, it is for save your location and send it to your friend. The format of the text must be in html</li>
 </ul>
 <p>The response will be <code>mensaje</code> and could be:</p>
 <ul>
@@ -208,7 +208,35 @@ The fields with * are required
 	      <li><code>imagein</code>: Profile image of the user</li>
 	  </ul>
   </div>
-  <div class="tab-pane fade" id="user-info-tab2"><br>Coming...</div>
+  <div class="tab-pane fade" id="user-info-tab2"><br>
+	 <p>This obtain works connecting to <code>http://m2s.es/app/api/profileinfo.php</code> and the get <code>id</code> with the id of user or <code>me</code>(This is equivalent to your user id). If the user isn't your friend, you obtain the same of the previous option more the last connection of user. If the user is your friend, you obtain all his profile info and his states. The response fields are:</p>
+	 <ul>
+		 <li><code>id</code>: Id of the user</li>
+		 <li><code>username</code>: His username</li>
+		 <li><code>imagein</code>: His profile image</li>
+		 <li><code>state</code>: Which this you know if he is your friend or not. The response could be:
+		   <ul>
+		    <li><code>1</code>: Your friend</li>
+		    <li><code>23</code>: He doesn't accept you or he block you</li>
+		    <li><code>4</code>: You are the same</li>
+		    <li><code>5</code>: Any friend request</li>
+		    <li><code>No found</code>: The user doesn't exist</li>
+		   </ul>
+		 </li>
+		<li><code>timeago</code>: The last connection of the user</li>
+		<li><code>genre</code>: His genre: <code>male</code> or <code>female</code></li>
+		<li><code>telf</code>: His telephone number</li>
+		<li><code>birt</code>: His date of birth</li>
+		<li><code>email</code>: His email</li>
+		<li><code>states</code>: All his states
+		 <ul>
+		   <li><code>text</code>: Text of the state</li>
+		   <li><code>location</code>: Shared location in format HTML</li>
+		   <li><code>date</code>: Date of the state</li>
+		 </ul>
+		</li>
+	 </ul>
+  </div>
 </div>
 
 </div>
