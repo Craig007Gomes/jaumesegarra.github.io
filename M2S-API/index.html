@@ -62,10 +62,9 @@
       <h1>Welcome to M2S API</h1>
       <p>This api allows you to create instant messaging applications without resorting to servers. It works in most environments as: php, android, iphone, java, etc ... but we will focus in javascript. Download full api example in javascript</p> <p><a class="btn btn-primary btn-lg" role="button" href="https://github.com/jaumesegarra/M2S" target="_blank">Download</a></p>
     </div>
-    <div class="alert alert-warning">When you obtain data, you receive in <code>XML</code>, no in json as when you modify data of M2S or login</div>
     <div id="login">
       <h3>Login user</h3>
-      <p>Most importantly, log in, m2s requires the user to have the session open http://m2s.es/app so there will be times that we will have to log in. To do this, we must call to <code>http://m2s.es/app/api/connect/login.php</code> with the gets <code>user</code> and <code>passmd5</code>.</p>
+      <p>Most importantly, log in, m2s requires the user to have the session open in <code>http://m2s.es/app</code> so there will be times that we will have to log in. To do this, we must call to <code>http://m2s.es/app/api/connect/login.php</code> with the gets <code>user</code> and <code>passmd5</code>.</p>
       <p>
       <h5>The gets:</h5>
       <ul>
@@ -164,7 +163,7 @@ The fields with * are required
 <div class="tab-content">
   <div class="tab-pane fade in active" id="user-info-tab1">
   <br>
-	  <p>With this method you obtain the id,username and profile image of user; and the state. For use you have establish connection to: <code>http://m2s.es/app/api/profileinfo.xml</code> and the get <code>username</code> with the name of user.</p>
+	  <p>With this method you obtain the id,username and profile image of user; and the state. For use you have establish connection to: <code>http://m2s.es/app/api/profileinfo.php</code> and the get <code>username</code> with the name of user.</p>
 	  <p>This method is perfect for find the users by username, check if it exist and obtain his id for send friendship petition later</p>
 	  <h5>Response:</h5>
 	  <ul>
