@@ -37,6 +37,7 @@
                 <li><a href="#sign-up">Sign up</a></li>
                 <li><a href="#add-friend">Add friend</a></li>
                 <li><a href="#write-message">Write a message</a></li>
+                <li><a href="#write-state">Write a state</a></li>
                 <li class="dropdown-header">More coming...</li>
               </ul>
             </li>
@@ -172,6 +173,21 @@ The fields with * are required
 	  <li>If you send the message to a group:<code>You are not of this group</code></li>
 	 </ul>
 	<li><code>Not login!</code>: The user session is expired</li>
+</ul>
+</div>
+<div id="write-state">
+<h3>Write a state</h3>
+<p>You can write states connecting to <code>http://m2s.es/app/api/connect/write-state.php</code> and the gets:</p>
+<ul>
+  <li><code>txt</code>: This is the state field</li>
+  <li><code>map</code>(Optional): This is the shared location of the user. It must in HTML format</li>
+</ul>
+<p>The response could be:</p>
+<ul>
+<li><code>ok</code>: The state has been write</li>
+<li><code>ec</code>: Error of the database</li>
+<li><code>e1</code>: No login session in M2S</li>
+<li><code>e2</code>: The <code>txt</code> get is empty</li>
 </ul>
 </div>
 <div id="user-info">
