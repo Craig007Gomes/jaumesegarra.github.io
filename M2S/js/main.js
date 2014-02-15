@@ -155,12 +155,8 @@ if(document.getElementById('loginmod')){
             var links = youtube.replace(exp,"<a href='$1' target='_blank'>$1</a>");
             return links
     }
-   function chat(id){
-       id = id.toString();
-       $('.li-chats').removeClass("active");
-	   $('#list-'+id).addClass("active");
-
-		   $.ajax({
+   function loadchat(id){
+	   $.ajax({
             type: "GET",
             crossDomain: true,
             url: "http://m2s.es/app/api/chat.php?id="+id,
@@ -254,6 +250,46 @@ if(document.getElementById('loginmod')){
        return msm;
      }
 	   }
+   }
+   function chat(id){
+       id = id.toString();
+       $('.li-chats').removeClass("active");
+	   $('#list-'+id).addClass("active");
+	   if($('.input-chat').length){
+		   $('.input-chat').remove();
+	   }
+	   loadchat(id);
+       $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" onclick="sendmsm('+id+')">Send</button></div>');
+       }
+   function sendmsm(id){
+       var txtvalue = document.getElementsByName('txt')[0].value;
+       var mapv = '';
+	   $.ajax({
+        type: "GET",
+        crossDomain: true,
+        url: "http://m2s.es/app/api/connect/chat.php",
+        data: "txt="+txtvalue+"&map="+mapv+"&id="+id,
+        cache:false,
+        dataType: 'jsonp',
+        beforeSend: function() {
+          console.log('Connecting...');
+          var sending = '<div id="sending-mod"><span>Sending...</span></div>';
+          $('.input-chat').append(sending);
+        },
+        complete: function() {
+         console.log('Completed');
+         setInterval(function(){
+         $('#sending-mod').remove();
+         document.getElementsByName('txt')[0].value = '';
+         id = $('.li-chats.active').attr("id").split('-');
+         id = id[1];
+	     loadchat(id); 
+        },3000);
+       },
+       success: function(result) {
+         console.log(result.mensaje);
+       }  
+     })
    }
    function aceptfriend(id){
 	   <!--Coming/-->
@@ -371,4 +407,15 @@ if(document.getElementById('loginmod')){
 	    notifications();
      }, 14000000);
    });
+   if(document.getElementById('people-bar')){
+   $(document).ready(function() {
+      if($('.li-chats .active').length != '0'){
+       var chatrefresh = setInterval(function() {
+        id = $('.li-chats.active').attr("id").split('-');
+        id = id[1];
+	    loadchat(id);
+      }, 14000);
+      }
+   });
+  }
 }
