@@ -168,7 +168,7 @@ if(document.getElementById('loginmod')){
             dataType: 'jsonp',
             success: function(data) {
             if(data.messages.length == 0){
-             $('.'+'chat-messages .center').html('<div class="empty" id="nodata"><span class="icon comments-alt"></span><strong>You have not said anything yet</strong></div>');
+             $('.'+'chat-messages .center').html('<div class="center-align"><h3><span class="icon comments-alt"></span>You have not said anything yet</h3></div>');
             }else{
              $('.'+'chat-messages .center').html('');
             }
