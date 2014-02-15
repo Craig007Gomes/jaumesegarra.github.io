@@ -169,8 +169,9 @@ if(document.getElementById('loginmod')){
             success: function(data) {
             if(data.messages.length == 0){
              $('.'+'chat-messages .center').html('<div class="empty" id="nodata"><span class="icon comments-alt"></span><strong>You have not said anything yet</strong></div>');
+            }else{
+             $('.'+'chat-messages .center').html('');
             }
-            $('.'+'chat-messages .center').html('');
             for(var i = 0; i < data.messages.length; i++){
               id = data.messages[i].id; 
               username = data.messages[i].username;
