@@ -4540,11 +4540,40 @@ textarea.input-group-sm > .input-group-btn > .btn {
   line-height: 20px;
 }
 
-@media (max-width: 767px) {
-  .navbar-brand {
+@media (max-width: 768px) {
+  .navbar-brand{
+	  margin-left: 10px
+  }
+  #menu.nav.navbar-nav{
+      width: auto; 
+      display: inline-block; 
+      position: absolute; 
+      left: 90px; 
+      top: -8px;
+  }
+  .nav.navbar-nav.navbar-right{
+	  position: absolute; 
+	  right: 30px; 
+	  top: -8px;
+  }
+  .navbar-nav > li > a {
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+}
+@media (max-width: 500px){
+  #menu.nav.navbar-nav{
+	  width: auto; 
+      display: flex;
+      display: block;
+      position: relative; 
+      left: 0; 
+      top: 0; 
+  }
+  .nav.navbar-nav.navbar-right{
 	  display: none
   }
-  .navbar-right{
+  .navbar-brand {
 	  display: none
   }
   .nav{
@@ -4563,12 +4592,36 @@ textarea.input-group-sm > .input-group-btn > .btn {
     display: inline-block
   }
   .navbar-nav > li > a {
-    padding-bottom: 15px;
-    padding-top: 15px;
     font-size: 25px;
   }
+  body footer{
+    display: block;
+    background-color: #444444;
+    bottom: 0;
+    height: 45px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    color: #fff;
+    text-align: center
 }
-@media (max-width: 500px){
+footer *{
+	line-height: 45px;
+}
+footer a{
+	color: #fff;
+}
+footer a:hover{
+	color: #fff;
+	text-decoration: none;
+}
+footer a:focus{
+    color: #fff;
+	text-decoration: none;
+}
+#people-bar.people-bar{
+	padding-bottom: 45px
+}
 #people-bar.people-bar{
 	width:100%;
 	border-right: 0px;

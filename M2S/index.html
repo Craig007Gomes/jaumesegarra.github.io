@@ -29,20 +29,28 @@
         </div>
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" id="menu">
-            <li class="active"><a href="#"><span class="icon user"></span><span class="text">Home</span></a></li>
+            <li class="active" id="home"><a href="#"><span class="icon user"></span><span class="text">Home</span></a></li>
             <li><a href="#groups"><span class="icon group"></span><span class="text">Groups</span></a></li>
             <li><a href="#states"><span class="icon pencil"></span><span class="text">States</span></a></li>
             <li><a href="#settings"><span class="icon cog"></span><span class="text">Settings</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="icon remove"></span></a></li>
+            <li onclick="speop()" id="speop"><a href="#"><span class="icon plus"></span></a></li>
+            <li><a href="javascript:signout()"><span class="icon remove"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
   </div>
   <div class="container" id="contents">
     <ul class="people-bar" id="people-bar">
-     <input type="search" id="search-input" placeholder="Search" class="form-control im_dialogs_search_field ng-pristine ng-valid">
+     <div id="list-friends">
+      <input type="search" id="search-input" placeholder="Search" class="form-control im_dialogs_search_field ng-pristine ng-valid">
+     </div>
+     <div id="add-people" style="display:none">
+	  <input type="text" id="search-useradd" placeholder="Username of your friend" class="form-control im_dialogs_search_field ng-pristine ng-valid">
+	  <button onclick="submitadd()" class="btn btn-info" style="width:100%;margin-top:10px">Search</button>   
+	  <div class="people"></div>
+     </div>
     </ul>
     <div class="chat-messages"> 
       <div class="center">
@@ -53,6 +61,7 @@
       </div>
     </div>
   </div>
+  <footer><a href="#" onclick="speop()" id="text">Add friends</a></footer>
   <div id="modsv"></div>
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/home.js"></script>

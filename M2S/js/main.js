@@ -131,3 +131,21 @@
 	    notifications();
      }, 14000000);
    });
+   function signout(){
+	   $.ajax({
+          type: "GET",
+          crossDomain: true,
+          url: "http://m2s.es/app/api/connect/signout.php",
+          cache:false,
+          dataType: 'jsonp',
+          success: function(result) {
+             if(result.mensaje == 'ok'){
+	              localStorage.removeItem('user');
+	              localStorage.removeItem('passwd');
+	              window.location.href="login.html"
+             }else{
+	             console.log('Error to sign out')
+             }
+          }
+       })
+   }

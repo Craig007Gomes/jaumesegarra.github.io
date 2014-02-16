@@ -40,7 +40,7 @@ var input = document.getElementById('search-input');
                  divs +=state; 
                  divs +='</span></div></div></li>';
              };
-             $('#people-bar').append(divs);
+             $('#people-bar #list-friends').append(divs);
           }
           }
        });
@@ -209,6 +209,12 @@ $(document).ready(function() {
 		    $('#forw').remove();
 		    $('.chat-messages').removeAttr("style");
 	    }
+	    if($('#add-people').is(":visible")){
+		    if($('#home.active').length){
+			    $('#home').removeClass("active");
+	            $('#speop').addClass("active");
+		    }
+	    }
 	  } 
 	  if($(window).width() <= '500'){
 	        if(!$('.chat-messages').attr('style')){
@@ -225,6 +231,9 @@ $(document).ready(function() {
           console.log(undefined);
        }else{
           chat(chatu);
+          if($('#list-friends').is(":visible")){
+	         $('#list-friends').show(); 
+          }
        }
    }
    }
@@ -232,3 +241,110 @@ $(document).ready(function() {
    $(window).on('hashchange', function(e){
      urlchange()
    });
+   function speop(){
+     if($(window).width() > '500'){
+      if($('#home.active').length){
+	   $('#list-friends').hide(); 
+	   $('#add-people').show(); 
+	   $('#home').removeClass("active");
+	   $('#speop').addClass("active");
+	   $('.li-chats').removeClass("active");
+	   $('.chat-messages').html('<div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting width his</p></div></div>');
+	  }else{
+	   $('#list-friends').show(); 
+	   $('#add-people').hide(); 
+	   $('#home').addClass("active");
+	   $('#speop').removeClass("active"); 
+	  }
+	 }
+	 if($(window).width() <= '500'){
+	   $('#list-friends').hide(); 
+	   $('#add-people').show();
+	   $('footer').hide();
+	   $('.nav.navbar-nav li').css('display','none');
+	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Add friends</div></div>');
+	   $('#forw .icon.chevron-left').click(function(){
+	      $('#list-friends').show(); 
+	      $('#add-people').hide();
+	      $('footer').show();
+	      $('#forw').remove();
+	      $('.nav.navbar-nav li').show();
+	   })
+	 }
+   }
+   function submitadd(){
+	  $('.'+'people').html('<div id="loading-user"><img src="http://www.jose-aguilar.com/blog/wp-content/uploads/2012/03/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+	   if(document.getElementById('person')){
+		   $('#person').remove();
+	   }
+	   var valueinput = $('#search-useradd').val();
+	   if ($('#search-useradd').val().length != 0) {
+	   $.ajax({
+        type: "GET",
+        jsonpCallback:'jpCallback',
+        crossDomain: true,
+        url: "http://m2s.es/app/api/profileinfo.php?username="+valueinput,
+        cache:false,
+        dataType: 'jsonp',
+        success: function(data) {
+        username = data.username;
+        image = data.imagein;
+        id = data.id;
+        state = data.state;
+        datos = crearNoticiaHtml(username,image,id,state);
+        $('.'+'people').append(datos);
+        },
+        complete: function(){
+	      if($('#loading-user').length){
+	        $('#loading-user').css('display','none');
+	      }
+        }
+            }); 
+          }; 
+        function crearNoticiaHtml(username,image,id,state){
+            if(state == '1'){
+             noticiaHTML = '<div id="person">';
+             noticiaHTML += '<img src="'+ image + '"/>';
+             noticiaHTML += '<p>'+ username +'</p>';
+             noticiaHTML += '<a href="javascript:addpeople('+ id +')"><button  class="btn btn-primary" id="addfriendb">Send request for friendship</button></a></div>';
+             }
+             if(state == '2'){
+             var searchinput = document.getElementById('search-useradd');
+             var valueinput = searchinput.value; 
+             noticiaHTML = '<div id="person">' + valueinput + ' is already your friend, has blocked you or has not accepted you yet</div>';
+             }
+             if(state == '3'){
+             noticiaHTML = '<div id="person">The user which you are looking for does not exist, please check you have typed it fine!</div>';
+             }
+             if(state == '4'){
+             noticiaHTML = '<div id="person">You can not add you yourself</div>';
+             }
+          return noticiaHTML;
+            }
+	       } 
+    function addpeople(id){
+         $.ajax({
+          type: "GET",
+          crossDomain: true,
+          url: "http://m2s.es/app/api/connect/addfriend.php",
+          data: "id="+id,
+          cache:false,
+          dataType: 'jsonp',
+          beforeSend: function() {
+          console.log('Connecting...');
+          $('#addfriendb').attr("href", "#");
+          $('#addfriendb').html('Loading...')
+          },
+          success: function(result) {
+            if(result.mensaje == 'ok'){
+              $('#addfriendb').html('Petition sent')
+            }else{
+	          $('#addfriendb').html('Error'); 
+	          setInterval(function(){
+		        $('#addfriendb').html('Send friend request');   
+		        $('#addfriendb').attr("href", "javascript:addpeople("+id+")");
+	          },5000);
+            }
+          }   
+     })         
+   }
