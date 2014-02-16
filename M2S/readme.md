@@ -12,6 +12,7 @@ You can:
   - Writte messages to your friends
   - Login improved
   - More responsive
+  
 New in 0.2
 ===
 You can:
