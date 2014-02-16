@@ -3,7 +3,7 @@ M2S
 
 Coming you can create your app based in M2S with our api.
 To learn how it works the api and more enter here:
-http://jaumesegarra.github.io/M2S-API/
+http://jaumesegarra.github.io/M2S-API/ or test online in http://jaumesegarra.github.io/M2S
 
 New in 0.2.1
 ===
