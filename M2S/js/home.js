@@ -250,6 +250,12 @@ $(document).ready(function() {
 	   $('#speop').addClass("active");
 	   $('.li-chats').removeClass("active");
 	   $('.chat-messages').html('<div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting width his</p></div></div>');
+	   $('#home').click(function(){
+		 $('#list-friends').show(); 
+	     $('#add-people').hide(); 
+	     $('#home').addClass("active");
+	     $('#speop').removeClass("active");  
+	   });
 	  }else{
 	   $('#list-friends').show(); 
 	   $('#add-people').hide(); 
