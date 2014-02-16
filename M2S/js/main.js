@@ -58,7 +58,8 @@
                  if(type == 'message'){
                    msm = result.listnotify[i].msm;
 	               itemlist += 'said you: '+msm;
-	               itemlist += '<a href="javascript:chat.html?id='+id+'"><button class="btn btn-lg btn-info">Read</button></a>';
+                   var url = 'index.html#chat-'+id;
+	               itemlist += '<a href="'+url+'"><button class="btn btn-lg btn-info">Read</button></a>';
                  };
                  if(type == 'message-group'){
                    msm = result.listnotify[i].msm;

@@ -217,3 +217,18 @@ $(document).ready(function() {
 	        }
 	  }
    })
+   function urlchange(){
+   var urlas = urlast();
+   if(urlas != undefined){
+	  var chatu = urlas.split('-')[1];  
+	  if(chatu==undefined){
+          console.log(undefined);
+       }else{
+          chat(chatu);
+       }
+   }
+   }
+   urlchange();
+   $(window).on('hashchange', function(e){
+     urlchange()
+   });
