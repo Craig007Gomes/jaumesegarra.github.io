@@ -5,6 +5,13 @@ Coming you can create your app based in M2S with our api.
 To learn how it works the api and more enter here:
 http://jaumesegarra.github.io/M2S-API/
 
+New in 0.2.1
+===
+You can:
+  - Read messages of your friends
+  - Writte messages to your friends
+  - Login improved
+  - More responsive
 New in 0.2
 ===
 You can:
