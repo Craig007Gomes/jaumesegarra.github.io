@@ -14,18 +14,66 @@
             var links = youtube.replace(exp,"<a href='$1' target='_blank'>$1</a>");
             return links
     }
-   function aceptfriend(id){
-	   <!--Coming/-->
-   }
-   function blockpeo(id){
-	  <!--Coming/-->
-   }
    function acceptgrj(idgroup,id){
 	   <!--Coming/-->
    }
    function blockgrj(idgroup,id){
 	   <!--Coming/-->
    }
+   function acceptfriend() {
+		  id = $(this).attr("id").split('-');
+                       $.ajax({
+                         type: "GET",
+                         crossDomain: true,
+                         url: "http://m2s.es/app/api/connect/acceptfriend.php?id="+id,
+                         cache:false,
+                         dataType: 'jsonp',
+                         beforeSend: function() {
+                             console.log('Connecting...');
+                             $('#acceptfriend-'+id).attr('disabled', true);
+                             $('#acceptfriend-'+id).html('Loading...')
+                         },
+                         success: function(result) {
+                            if(result.mensaje == 'ok'){
+                             setInterval(function(){
+	                            $('#fr-'+id).fadeOut(500, function() {
+	                               $('#fr-'+id).remove();
+	                            })
+	                            if($('#list-notifications .item').length == '0'){
+		                            $('.background-dark').remove();
+	                            }
+	                         },3000);
+                            }
+                         }
+                       })
+   };
+   function blockfriend() {
+		  id = $(this).attr("id").split('-');
+                       $.ajax({
+                         type: "GET",
+                         crossDomain: true,
+                         url: "http://m2s.es/app/api/connect/blockfriend.php?id="+id,
+                         cache:false,
+                         dataType: 'jsonp',
+                         beforeSend: function() {
+                             console.log('Connecting...');
+                             $('#blockfriend-'+id).attr('disabled', true);
+                             $('#blockfriend-'+id).html('Loading...')
+                         },
+                         success: function(result) {
+                            if(result.mensaje == 'ok'){
+                             setInterval(function(){
+	                            $('#fr-'+id).fadeOut(500, function() {
+	                               $('#fr-'+id).remove();
+	                            })
+	                            if($('#list-notifications .item').length == '0'){
+		                            $('.background-dark').remove();
+	                            }
+	                         },3000);
+                            }
+                         }
+                       })
+   };
    function notifications(){
 	   $.ajax({
           type: "GET",
@@ -46,14 +94,18 @@
                  username = result.listnotify[i].username;
                  imgp = result.listnotify[i].imgp;
                  type = result.listnotify[i].type;
-                 itemlist = '<div class="item">';
+                 if(type == 'friend-request'){
+                   itemlist = '<div class="item" id="fr-'+id+'">';
+                 }else{
+	               itemlist = '<div class="item">';    
+                 }
                  itemlist += '<img src="'+imgp+'"/>';
                  itemlist += '<div class="right-img">';
                  itemlist += '<span>'+username+'</span>';
                  if(type == 'friend-request'){
-	               itemlist += 'wants your friend';
-	               itemlist += '<button onclick="aceptfriend('+id+')" class="btn btn-lg btn-info">Accept friend</button>';
-	               itemlist += '<button onclick="blockpeo('+id+')" class="btn btn-lg btn-danger">Block</button>';
+	               itemlist += ' wants your friend';
+	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend()">Accept friend</button>';
+	               itemlist += '<button id="blockfriend-'+id+'"  class="btn btn-lg btn-danger" onclick="blockfriend()">Block</button>';
                  };
                  if(type == 'message'){
                    msm = result.listnotify[i].msm;
@@ -65,7 +117,7 @@
                    msm = result.listnotify[i].msm;
                    namegroup = result.listnotify[i].namegroup;
 	               itemlist += ' said in the group '+namegroup+': '+msm;
-	               itemlist += '<a href="javascript:chatgr.html?id='+id+'"><button class="btn btn-lg btn-info">Read</button></a>';
+	               itemlist += '<a href="groups.html#chat-'+id+'"><button class="btn btn-lg btn-info">Read</button></a>';
                  }
                  if(type == 'addgroup-request'){
                    idgroup = result.listnotify[i].idgroup;

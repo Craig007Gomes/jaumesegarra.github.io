@@ -21,6 +21,9 @@ var input = document.getElementById('search-input');
           dataType: 'jsonp',
           success: function(result) {
              if(result.friends){
+             if(result.friends.length == '0'){
+	            $('#people-bar #list-friends').append("<div class='no-friends'><h4>You don't have any friends yet!</h4><p>Please, add a friend for his username clicking in the plus icon of top or in the footer if you are in a mobile</p></div>"); 
+             }
              for(var i = 0; i < result.friends.length; i++){
                  id = result.friends[i].id; 
                  username = result.friends[i].username; 
@@ -32,7 +35,7 @@ var input = document.getElementById('search-input');
                  }
                  divs += '<li class="li-chats" id="list-'+id+'" onclick="chat('+id+')"><img src="'; 
                  divs +=imagepr; 
-                 divs +='"/><div class="right-info">'; 
+                 divs +='" class="img"/><div class="right-info">'; 
                  divs +=unreadmsm; 
                  divs +='<span class="icon chevron-right"></span></div><div class="right-p"><div><span class="name">'; 
                  divs +=username; 
@@ -71,7 +74,7 @@ function loadchat(id, type){
 		          $('.chat-messages').css('display','none');
 		          $('.nav.navbar-nav li').css('display','inline-block');
 		          $('#forw').remove();
-		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting width his</p></div></div></div>');
+		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
 	           });
             }
             for(var i = 0; i < data.messages.length; i++){
@@ -90,7 +93,8 @@ function loadchat(id, type){
               $('.'+'chat-messages .center').append(datosmem);
             }
             if(type == 'pr'){
-	          $('.center').scrollTop($(document).height());
+	          var d = $('.'+'chat-messages .center');
+	          d.scrollTop(d.prop("scrollHeight"));
             }
            }
          });
@@ -109,7 +113,6 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
              msm+= '<blockquote>'
          }
          if(stick == '1'){
-            var textmsm = textmsm.substring(0, textmsm.length-17);
             msm+= '<div class="'+textmsm+'"></div>';  
          }else{
             msm+= '<p>'+linkscom(textmsm)+'</p>';
@@ -179,7 +182,8 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
        }
      if($('#'+id).length){}else{
        return msm;
-       $('.center').scrollTop($(document).height());
+       var d = $('.'+'chat-messages .center');
+	   d.scrollTop(d.prop("scrollHeight"));
      }
 	   }
    }
@@ -192,6 +196,11 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
 	   }
 	   loadchat(id,'pr');
        $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" id="more-chat" data-toggle="modal" data-target="#more-share">+</button> <button class="btn btn-info" id="send-button" onclick="sendmsm('+id+')">Send</button></div>');
+       $("textarea[name='txt']").keypress(function(event) {
+              if(event.keyCode == 13) {
+                if (!event.shiftKey) sendmsm()
+              }
+       });
        }
    function deletemessage(id){
 	   id = id.toString();
@@ -204,7 +213,9 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
             success: function(data) {
                if(data.mensaje == 'ok'){
                   console.log('Message deleted succesfully');
-	              $('#'+id).remove();  
+                  $('#'+id).fadeOut(1000, function() {
+	               $('#'+id).remove();  
+	              })
                }
             }
       });
@@ -213,7 +224,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
        $('#more-share').modal('hide');
 	   sendchat(text,'');
    }
-   function sendmsm(id){
+   function sendmsm(){
 	   var txtvalue = document.getElementsByName('txt')[0].value;
 	   if(document.getElementsByName('map')[0]){
 	     var mapv = document.getElementsByName('map')[0].value;
@@ -285,7 +296,7 @@ $(document).ready(function() {
 	        }
 	        if(!$('.chat-messages').attr('style')){
 		       $('.li-chats').removeClass("active");
-		       $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting width his</p></div></div></div>');
+		       $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
 		       if($('#map-html').lenght != '0'){
 		        $('#btn-location').html('Share location');
 	            $('#btn-location').removeClass('btn-danger');
@@ -331,7 +342,7 @@ $(document).ready(function() {
 	   $('#home').removeClass("active");
 	   $('#speop').addClass("active");
 	   $('.li-chats').removeClass("active");
-	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting width his</p></div></div></div>');
+	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
 	   $('#home').click(function(){
 		 $('#list-friends').show(); 
 	     $('#add-people').hide(); 
@@ -361,7 +372,7 @@ $(document).ready(function() {
 	 }
    }
    function submitadd(){
-	  $('.'+'people').html('<div id="loading-user"><img src="http://www.jose-aguilar.com/blog/wp-content/uploads/2012/03/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+	  $('.'+'people').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
 	   if(document.getElementById('person')){
 		   $('#person').remove();
 	   }

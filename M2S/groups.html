@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Home - M2S</title>
+	<title>My groups - M2S</title>
     <meta charset="utf-8">
     <meta name="description" content="">
     <meta name="author" content="Jaume Segarra">
@@ -29,13 +29,14 @@
         </div>
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" id="menu">
-            <li class="active" id="home"><a href="#"><span class="icon user"></span><span class="text">Home</span></a></li>
-            <li><a href="groups.html"><span class="icon group"></span><span class="text">Groups</span></a></li>
+            <li><a href="index.html"><span class="icon user"></span><span class="text">Home</span></a></li>
+            <li class="active" id="home"><a href="#"><span class="icon group"></span><span class="text">Groups</span></a></li>
             <li><a href="#states"><span class="icon pencil"></span><span class="text">States</span></a></li>
             <li><a href="#settings"><span class="icon cog"></span><span class="text">Settings</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li onclick="speop()" id="speop"><a href="#"><span class="icon plus"></span></a></li>
+            <li onclick="" id="creategroup" style="display:none"><a href="#"><span class="icon plus" style="position:relative;top:1px"></span></a></li>
+            <li onclick="searchgroupbutton()" id="searchgroup"><a href="#"><span class="icon search" style="font-size: 20px;"></span></a></li>
             <li><a href="javascript:signout()"><span class="icon remove"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
@@ -49,23 +50,23 @@
        </div>
      </div>
      <div id="add-people" style="display:none">
-	  <input type="text" id="search-useradd" placeholder="Username of your friend" class="form-control im_dialogs_search_field ng-pristine ng-valid">
-	  <button onclick="submitadd()" class="btn btn-info" style="width:100%;margin-top:10px">Search</button>   
-	  <div class="people"></div>
+	  <input type="text" id="search-useradd" placeholder="Search anything which you are interested" class="form-control im_dialogs_search_field ng-pristine ng-valid">
+	  <button onclick="submitsearch()" class="btn btn-info" style="width:100%;margin-top:10px">Search</button>   
+	  <div class="search-group-ul"></div>
      </div>
     </ul>
     <div class="chat-messages"> 
     <div class="foot-space">
       <div class="center">
         <div class="center-align">
-         <h3>No friend select</h3>
-         <p>Select one of your friends for chatting with he</p>
+         <h3>No group select</h3>
+         <p>Select one of your groups for chatting with theirs</p>
         </div>
       </div>
       </div>
     </div>
   </div>
-  <footer><a href="#" onclick="speop()" id="text">Add friends</a></footer>
+  <footer><a href="#" onclick="searchgroupbutton()" id="text">Search groups</a></footer>
   <div id="modsv"></div>
   <div class="modal fade" id="more-share" tabindex="-1" role="dialog" aria-labelledby="more-share" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -146,6 +147,6 @@
   <script src="js/quo.events.js"></script>
   <script src="js/quo.gestures.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
-  <script type="text/javascript" src="js/home.js"></script>
+  <script type="text/javascript" src="js/groups.js"></script>
 </body>
 </html>
