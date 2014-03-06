@@ -64,19 +64,6 @@ function loadchat(id, type){
             }else{
              $('.'+'chat-messages .center').html('');
             }
-            if($(window).width() <= '500'){
-	           $('.chat-messages').css('display','block');
-	           $('.nav.navbar-nav li').css('display','none');
-	           username = $('.li-chats.active .name').html();
-	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Chat with '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
-	           $('#forw .icon.chevron-left').click(function(){
-		          $('.li-chats').removeClass("active");
-		          $('.chat-messages').css('display','none');
-		          $('.nav.navbar-nav li').css('display','inline-block');
-		          $('#forw').remove();
-		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
-	           });
-            }
             for(var i = 0; i < data.messages.length; i++){
               id = data.messages[i].id; 
               username = data.messages[i].username;
@@ -92,7 +79,7 @@ function loadchat(id, type){
               datosmem = crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,tableid);
               $('.'+'chat-messages .center').append(datosmem);
             }
-            if(type == 'pr'){
+            if(type == 'pr' || type == 'prs'){
 	          var d = $('.'+'chat-messages .center');
 	          d.scrollTop(d.prop("scrollHeight"));
             }
@@ -191,16 +178,30 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
        id = id.toString();
        $('.li-chats').removeClass("active");
 	   $('#list-'+id).addClass("active");
+	   if($(window).width() <= '500'){
+	          $('.chat-messages').html('<div class="center"><div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div></div>');
+	           $('.chat-messages').css('display','block');
+	           $('.nav.navbar-nav li').css('display','none');
+	           username = $('.li-chats.active .name').html();
+	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Chat with '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
+	           $('#forw .icon.chevron-left').click(function(){
+		          $('.li-chats').removeClass("active");
+		          $('.chat-messages').css('display','none');
+		          $('.nav.navbar-nav li').css('display','inline-block');
+		          $('#forw').remove();
+		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
+	           });
+       }
 	   if($('.input-chat').length){
 		   $('.input-chat').remove();
-	   }
-	   loadchat(id,'pr');
+	   }	   
        $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" id="more-chat" data-toggle="modal" data-target="#more-share">+</button> <button class="btn btn-info" id="send-button" onclick="sendmsm('+id+')">Send</button></div>');
        $("textarea[name='txt']").keypress(function(event) {
               if(event.keyCode == 13) {
                 if (!event.shiftKey) sendmsm()
               }
        });
+       loadchat(id,'pr');
        }
    function deletemessage(id){
 	   id = id.toString();
@@ -252,7 +253,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
          console.log('Completed');
          $('.input-chat #send-button').removeAttr("disabled");
          document.getElementsByName('txt')[0].value = '';
-	     loadchat(id,'pr'); 
+	     loadchat(id,'prs'); 
        },
        success: function(result) {
          console.log(result.mensaje);
@@ -285,15 +286,8 @@ $(document).ready(function() {
 	    if($('footer').is(":visible")){
 	        $('footer').hide();
 	    } 
-	    if($('#spaces').length != '0'){
-		    $('#spaces').remove();
-	    }
 	  } 
 	  if($(window).width() <= '500'){
-	        var spaces = "<div id='spaces' style='height:60px;width:100%'></div>";
-	        if($('#spaces').length == '0'){
-	           $('#people-bar').append(spaces);
-	        }
 	        if(!$('.chat-messages').attr('style')){
 		       $('.li-chats').removeClass("active");
 		       $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
@@ -312,10 +306,6 @@ $(document).ready(function() {
 	      }
 	  }
    });
-   if($(window).width() <= '500'){
-	    var spaces = "<div id='spaces' style='height:60px;width:100%'></div>";
-	    $('#people-bar').append(spaces);
-   }
    function urlchange(){
    var urlas = urlast();
    if(urlas != undefined){
@@ -469,20 +459,21 @@ $(document).ready(function() {
 			 this.width *= MAX_HEIGHT / this.height;
 			 this.height = MAX_HEIGHT;
 		    }
-		    var context = canvas.getContext('2d');
-		    context.clearRect(0, 0, canvas.width, canvas.height);
 		    canvas.width = this.width;
-		    canvas.height = this.height;
+            canvas.height = this.height;
+            var context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(this, 0, 0, this.width, this.height);
         });
         $('#more-share').modal('hide');
         $('#img-mod').modal('show');
     }
+    
     $('#upload-image').click(function(){
      if($('.li-chats.active').length != '0'){
         $('#upload-image').attr('disabled','disabled');
         var canvas = document.getElementById("canvas");
-        var url = canvas.toDataURL();
+        var url = canvas.toDataURL("image/png", 1.0);
         url = url.replace('data:image/png;base64,', '');
         console.log(url);
         $.ajax({

@@ -155,6 +155,7 @@ textarea {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
+  background-image: none;
 }
 
 button,
@@ -2295,6 +2296,7 @@ textarea.input-lg {
   font-weight: normal;
   line-height: 1.428571429;
   text-align: center;
+  background-image: none;
   white-space: nowrap;
   vertical-align: middle;
   cursor: pointer;
@@ -6117,7 +6119,6 @@ button.close {
 }
 .user-info .info-profile{
 	min-height: 70px;
-	margin-bottom: 10px
 }
 .user-info .info-profile h3 {
     margin-bottom: 0;
@@ -6140,6 +6141,38 @@ button.close {
 	text-decoration: none;
 	outline:0px;
 }
+.user-info .footbutton {
+    background: none repeat scroll 0 0 #F2F2F2;
+    border-radius: 5px;
+    height: 60px;
+    margin-top: 10px;
+    padding: 10px 5px;
+}
+.user-info .footbutton .leftb {
+    float: left;
+}
+.user-info .footbutton .leftb img {
+    border-radius: 20px;
+    float: left;
+    width: 40px;
+}
+.footbutton .leftb i {
+    margin-left: 5px;
+}
+.footbutton .leftb b {
+    display: block;
+    padding-left: 45px;
+}
+.footbutton .rightb {
+    float: right;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+.footbutton .centerb {
+    width: 100%;
+    text-align: center;
+    line-height: 40px
+}
 .user-info .info-profile p.ellipsis{
     overflow: auto;
     text-overflow: inherit;
@@ -6159,6 +6192,22 @@ button.close {
 	color: #fff
 }
 .error .close{
+	margin-right: 10px;
+	color: #fff
+}
+.info .modal-dialog{
+    max-width: 350px;
+    top: 30%;
+}
+.info .modal-header{
+	background-color: #0096ff;
+	border-radius: 0px
+}
+.info .modal-title {
+	margin-left:20px;
+	color: #fff
+}
+.info .close{
 	margin-right: 10px;
 	color: #fff
 }
@@ -6275,7 +6324,7 @@ button.close {
 }
 .modal-body {
   position: relative;
-  padding: 20px;
+  padding: 12px;
 }
 
 .modal-footer {
@@ -6329,6 +6378,20 @@ button.close {
 	  width: 100%;
 	  margin: 0px;
   }
+  .modal-body{
+	  height: -webkit-calc(100% - 50px);
+	  height: -moz-calc(100% - 50px);
+	  height: -o-calc(100% - 50px);
+	  height: calc(100% - 50px);
+  }
+  .modal-body .tab-content {
+    height: 100%;
+  }
+  .modal-body .tab-content > .active {
+    display: block;
+    height: inherit;
+    overflow: auto;
+  }
   .error .modal-dialog{
 	  width: auto;
 	  margin: 20px;
@@ -6337,6 +6400,16 @@ button.close {
      margin-top:-4px
   }
   .error .modal-content{
+	  height: auto;
+  }
+  .info .modal-dialog{
+	  width: auto;
+	  margin: 20px;
+  }
+  .info .modal-header .close{
+     margin-top:-4px
+  }
+  .info .modal-content{
 	  height: auto;
   }
   .modal-header .close {

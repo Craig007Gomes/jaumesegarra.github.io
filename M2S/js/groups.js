@@ -80,19 +80,6 @@ function loadchat(id, type){
             }else{
              $('.'+'chat-messages .center').html('');
             }
-            if($(window).width() <= '500'){
-	           $('.chat-messages').css('display','block');
-	           $('.nav.navbar-nav li').css('display','none');
-	           username = $('.li-chats.active .name').html();
-	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Chat of '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
-	           $('#forw .icon.chevron-left').click(function(){
-		          $('.li-chats').removeClass("active");
-		          $('.chat-messages').css('display','none');
-		          $('.nav.navbar-nav li').css('display','inline-block');
-		          $('#forw').remove();
-		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
-	           });
-            }
             for(var i = 0; i < data.messages.length; i++){
               id = data.messages[i].id; 
               username = data.messages[i].username;
@@ -108,7 +95,7 @@ function loadchat(id, type){
               datosmem = crearmsmd(id,username,iduser,imgr,textmsm,locat,admin,fecha,me,stick,tableid);
               $('.'+'chat-messages .center').append(datosmem);
             }
-            if(type == 'pr'){
+            if(type == 'pr' || type == 'prs'){
               var d = $('.'+'chat-messages .center');
 	          d.scrollTop(d.prop("scrollHeight"));
             }
@@ -229,6 +216,20 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,admin,fecha,me,stick,ta
 	   if($('.input-chat').length){
 		   $('.input-chat').remove();
 	   }
+	   if($(window).width() <= '500'){
+	           $('.chat-messages').html('<div class="center"><div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div></div>');
+	           $('.chat-messages').css('display','block');
+	           $('.nav.navbar-nav li').css('display','none');
+	           username = $('.li-chats.active .name').html();
+	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Chat of '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
+	           $('#forw .icon.chevron-left').click(function(){
+		          $('.li-chats').removeClass("active");
+		          $('.chat-messages').css('display','none');
+		          $('.nav.navbar-nav li').css('display','inline-block');
+		          $('#forw').remove();
+		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	           });
+       }
 	   loadchat(id,'pr');
        $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" id="more-chat" data-toggle="modal" data-target="#more-share">+</button> <button class="btn btn-info" id="send-button" onclick="sendmsm('+id+')">Send</button></div>');
        $("textarea[name='txt']").keypress(function(event) {
@@ -294,7 +295,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,admin,fecha,me,stick,ta
          console.log('Completed');
          $('.input-chat #send-button').removeAttr("disabled");
          document.getElementsByName('txt')[0].value = '';
-	     loadchat(id,'pr'); 
+	     loadchat(id,'prs');
        },
        success: function(result) {
          console.log(result.mensaje);
@@ -454,6 +455,8 @@ $(document).ready(function() {
 	   $('footer').hide();
 	   $('.nav.navbar-nav li').css('display','none');
 	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Search a group</div></div>');
+	   $('#contents').css('padding-bottom','0px');
+	   $('#spaces').css('height','20px');
 	   $('#forw .icon.chevron-left').click(function(){
 	      $('#list-friends').show(); 
 	      $('#add-people').hide();
@@ -461,6 +464,8 @@ $(document).ready(function() {
 	      $('#forw').remove();
 	      $('.nav.navbar-nav li').show();
 	      $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	      $('#contents').css('padding-bottom','50px');
+	      $('#spaces').css('height','60px');
 	   })
 	 }
 	 $('.search-group-ul .officials').remove();
@@ -596,6 +601,26 @@ $(document).ready(function() {
               if(result.yourstate == '1'){
 	            modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';  
               }
+              if(result.yourstate == '0'){
+	            modaluser += '<a id="joingroupbutton" class="btn btn-default">Join to this group</a>';
+	            if(admininfo != null || peoplejoin != '0'){
+	            modaluser += '<div class="footbutton">';
+	            if(admininfo != null){
+		          modaluser += '<div class="leftb">';
+		          modaluser += '<img src="'+admininfo.imagein+'"/>';
+		          modaluser += '<i>Created by:</i>';
+		          modaluser += '<b>'+admininfo.username+'</b></div>';
+	            }
+	            if(peoplejoin != '0'){
+	              if(admininfo == null){
+		            modaluser += '<div class="centerb">';
+		          }else{
+			        modaluser += '<div class="rightb">';  
+		          }
+		          modaluser += '<i>People joined:</i> <b>'+peoplejoin+'</b></div>';
+	            }
+	            }
+              }
               modaluser += '</div>';
               $('.fade.user-info .modal-body').append(modaluser);
               $('#read_more').click(function(){
@@ -611,6 +636,31 @@ $(document).ready(function() {
                  $('.modal-backdrop.fade.in').remove();
                  $('#forw').remove();
                  document.location.href = 'groups.html#chat-'+id;
+              })
+              $('#joingroupbutton').click(function(){
+                 $.ajax({
+                   type: "GET",
+                   crossDomain: true,
+                   url: "http://m2s.es/app/api/connect/joingroup.php?id="+id,
+                   cache:false,
+                   dataType: 'jsonp',
+                   beforeSend: function() {
+                     console.log('Connecting...');
+                     $('#joingroupbutton').addAttr('disabled','disabled');
+                     $('#joingroupbutton').html('Loading...');
+                   },
+                   success: function(data) {
+                     if(data.mensaje == 'ok'){
+                       if(private == 'no'){
+                         $('.fade.user-info').modal('hide');
+                         infomod('Congratulations! You just joined this group!'); 
+                       }else{
+	                     $('.fade.user-info').modal('hide');
+	                     infomod('Wait for the group admin accept you');  
+                       }
+                     }
+                   }
+                 })
               })
           }   
      })  

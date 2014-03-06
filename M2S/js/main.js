@@ -15,13 +15,58 @@
             return links
     }
    function acceptgrj(idgroup,id){
-	   <!--Coming/-->
+     $.ajax({
+       type: "GET",
+       crossDomain: true,
+       url: "http://m2s.es/app/api/connect/acceptpjg.php?id="+idgroup+"&iduser="+id,
+       cache:false,
+       dataType: 'jsonp',
+       beforeSend: function() {
+         console.log('Connecting...');
+         $('#acceptpeogroup-'+id).attr('disabled', true);
+         $('#acceptpeogroup-'+id).html('Loading...')
+       },
+       success: function(result) {
+         if(result.mensaje == 'ok'){
+           setInterval(function(){
+	         $('#fgr-'+id).fadeOut(500, function() {
+	           $('#fgr-'+id).remove();
+	         })
+	         if($('#list-notifications .item').length == '0'){
+		       $('.background-dark').remove();
+	         }
+	       },3000);
+         }
+       }
+     })
    }
    function blockgrj(idgroup,id){
-	   <!--Coming/-->
+     $.ajax({
+       type: "GET",
+       crossDomain: true,
+       url: "http://m2s.es/app/api/connect/blockpjg.php?id="+idgroup+"&iduser="+id,
+       cache:false,
+       dataType: 'jsonp',
+       beforeSend: function() {
+         console.log('Connecting...');
+         $('#blockpeogroup-'+id).attr('disabled', true);
+         $('#blockpeogroup-'+id).html('Loading...')
+       },
+       success: function(result) {
+         if(result.mensaje == 'ok'){
+           setInterval(function(){
+	         $('#fgr-'+id).fadeOut(500, function() {
+	           $('#fgr-'+id).remove();
+	         })
+	         if($('#list-notifications .item').length == '0'){
+		       $('.background-dark').remove();
+	         }
+	       },3000);
+         }
+       }
+     }) 
    }
-   function acceptfriend() {
-		  id = $(this).attr("id").split('-');
+   function acceptfriend(id) {
                        $.ajax({
                          type: "GET",
                          crossDomain: true,
@@ -42,13 +87,15 @@
 	                            if($('#list-notifications .item').length == '0'){
 		                            $('.background-dark').remove();
 	                            }
+	                            if (document.location.pathname.indexOf("index.html") == 0){
+		                            document.location.href='index.html';
+	                            }
 	                         },3000);
                             }
                          }
                        })
    };
-   function blockfriend() {
-		  id = $(this).attr("id").split('-');
+   function blockfriend(id) {
                        $.ajax({
                          type: "GET",
                          crossDomain: true,
@@ -97,15 +144,19 @@
                  if(type == 'friend-request'){
                    itemlist = '<div class="item" id="fr-'+id+'">';
                  }else{
-	               itemlist = '<div class="item">';    
+                   if(type == 'addgroup-request'){
+                     itemlist = '<div class="item" id="fgr-'+id+'">';
+                   }else{
+	                 itemlist = '<div class="item">';    
+	               }
                  }
                  itemlist += '<img src="'+imgp+'"/>';
                  itemlist += '<div class="right-img">';
                  itemlist += '<span>'+username+'</span>';
                  if(type == 'friend-request'){
 	               itemlist += ' wants your friend';
-	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend()">Accept friend</button>';
-	               itemlist += '<button id="blockfriend-'+id+'"  class="btn btn-lg btn-danger" onclick="blockfriend()">Block</button>';
+	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend('+id+')">Accept friend</button>';
+	               itemlist += '<button id="blockfriend-'+id+'"  class="btn btn-lg btn-danger" onclick="blockfriend('+id+')">Block</button>';
                  };
                  if(type == 'message'){
                    msm = result.listnotify[i].msm;
@@ -123,8 +174,8 @@
                    idgroup = result.listnotify[i].idgroup;
                    namegroup = result.listnotify[i].namegroup;
 	               itemlist += ' wants join to your group '+namegroup;  
-	               itemlist += '<button onclick="acceptgrj('+idgroup+','+id+')" class="btn btn-lg btn-info">Accept</button>';
-	               itemlist += '<button onclick="blockgrj('+idgroup+','+id+')" class="btn btn-lg btn-danger">Block</button>';
+	               itemlist += '<button onclick="acceptgrj('+idgroup+','+id+')" id="acceptpeogroup-'+id+'" class="btn btn-lg btn-info">Accept</button>';
+	               itemlist += '<button onclick="blockgrj('+idgroup+','+id+')" id="blockpeogroup-'+id+'" class="btn btn-lg btn-danger">Block</button>';
                  }
                  itemlist += '</div></div>';
                  $('#list-notifications').append(itemlist);
@@ -168,7 +219,20 @@
 		        $('.navbar-fixed-top').css('height','70px');
 		        var notifyb = '<div id="notify-mobile">You have notifications!</div>';
 		        $('.navbar-fixed-top').prepend(notifyb);
-		        $('#contents').css('padding-top','20px');
+		        if($(window).width() <= '500'){
+		          $('#contents').css('padding-top','35px');
+		          $('#contents .chat-messages').css('padding-bottom', '135px');
+		        }else{ 
+		          $('#contents').css('padding-top','20px');
+		        }
+		        $(window).resize(function() {
+	              if($(window).width() > '500'){
+	                if($('#contents').css('padding-top') == '35px'){
+		               $('#contents').css('padding-top','20px'); 
+		               $('#contents .chat-messages').css("padding-bottom", "");
+	                }
+	              }
+	            })
 		        $('#contents').css('height','100%');
 		        $('#notify-mobile').click(function(){
 			       litsnotify();
@@ -188,7 +252,7 @@
    $(document).ready(function() {
      var notificationsrefresh = setInterval(function() {
 	    notifications();
-     }, 14000000);
+     }, 14000);
    });
    function signout(){
 	   $.ajax({
