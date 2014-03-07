@@ -48,6 +48,7 @@ var input = document.getElementById('search-input');
                  divs +='</span></div></div></li>';
              };
              $('#people-bar #list-friends').append(divs);
+             urlchange();
           }
           }
        });
@@ -320,7 +321,6 @@ $(document).ready(function() {
        }
    }
    }
-   urlchange();
    $(window).on('hashchange', function(e){
      urlchange()
    });

@@ -64,6 +64,7 @@ var input = document.getElementById('search-input');
                  divs +='</span></div></div></li>';
              };
              $('#people-bar #list-friends').append(divs);
+             urlchange();
           }
           }
        });
@@ -389,7 +390,6 @@ $(document).ready(function() {
        }
    }
    }
-   urlchange();
    $(window).on('hashchange', function(e){
      urlchange()
    });
@@ -560,111 +560,6 @@ $(document).ready(function() {
 	        $('.search-group-ul .intgr').show();
           }; 
 	  } 
-    function infogroup(id){
-         $(document.body).append('<div class="modal fade user-info" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h3 class="modal-title">Group profile</h3></div><div class="modal-body"></div></div></div></div>');
-         $('.fade.user-info').modal('show');
-         $('.fade.user-info').on('hidden.bs.modal', function (e) {
-           $('.fade.user-info').remove();
-         });
-         $.ajax({
-          type: "GET",
-          crossDomain: true,
-          url: "http://m2s.es/app/api/groupinfo.php",
-          data: "id="+id,
-          cache:false,
-          dataType: 'jsonp',
-          beforeSend: function() {
-          console.log('Connecting...');
-          $('.fade.user-info .modal-body').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
-          },
-          success: function(result) {
-            id = result.id;
-            name = result.groupname;
-            image = result.imagein;
-            private = result.private;
-            admininfo = result.admininfo;
-            official = result.official;
-            local = result.local;
-            decription = result.description;
-            peoplejoin = result.peoplejoined;
-              $('.fade.user-info .modal-body').html('');
-              var modaluser = '';
-              modaluser += '<div class="head">';
-              if(image != null){
-	            modaluser += '<img src="'+image+'"/><div class="info-profile" style="padding-left:80px">';   
-              }else{
-	            modaluser += '<div class="info-profile">';   
-              }
-              modaluser += '<h3>'+name+'</h3>';
-              modaluser += '<a href="#" id="read_more"><p>'+decription+'</p></a>';
-              modaluser += '</div>';
-              if(result.yourstate == '1'){
-	            modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';  
-              }
-              if(result.yourstate == '0'){
-	            modaluser += '<a id="joingroupbutton" class="btn btn-default">Join to this group</a>';
-	            if(admininfo != null || peoplejoin != '0'){
-	            modaluser += '<div class="footbutton">';
-	            if(admininfo != null){
-		          modaluser += '<div class="leftb">';
-		          modaluser += '<img src="'+admininfo.imagein+'"/>';
-		          modaluser += '<i>Created by:</i>';
-		          modaluser += '<b>'+admininfo.username+'</b></div>';
-	            }
-	            if(peoplejoin != '0'){
-	              if(admininfo == null){
-		            modaluser += '<div class="centerb">';
-		          }else{
-			        modaluser += '<div class="rightb">';  
-		          }
-		          modaluser += '<i>People joined:</i> <b>'+peoplejoin+'</b></div>';
-	            }
-	            }
-              }
-              modaluser += '</div>';
-              $('.fade.user-info .modal-body').append(modaluser);
-              $('#read_more').click(function(){
-                $('.info-profile p').toggleClass('ellipsis');
-              });
-              $('#chatbutton').click(function(){
-                 $('.fade.user-info').modal('hide');
-                 $('#add-people').hide();
-                 $('#list-friends').show();
-                 $('#home').addClass('active');
-                 $('#searchgroup').removeAttr('class');
-                 $('footer').show();
-                 $('.modal-backdrop.fade.in').remove();
-                 $('#forw').remove();
-                 document.location.href = 'groups.html#chat-'+id;
-              })
-              $('#joingroupbutton').click(function(){
-                 $.ajax({
-                   type: "GET",
-                   crossDomain: true,
-                   url: "http://m2s.es/app/api/connect/joingroup.php?id="+id,
-                   cache:false,
-                   dataType: 'jsonp',
-                   beforeSend: function() {
-                     console.log('Connecting...');
-                     $('#joingroupbutton').addAttr('disabled','disabled');
-                     $('#joingroupbutton').html('Loading...');
-                   },
-                   success: function(data) {
-                     if(data.mensaje == 'ok'){
-                       if(private == 'no'){
-                         $('.fade.user-info').modal('hide');
-                         infomod('Congratulations! You just joined this group!'); 
-                       }else{
-	                     $('.fade.user-info').modal('hide');
-	                     infomod('Wait for the group admin accept you');  
-                       }
-                     }
-                   }
-                 })
-              })
-          }   
-     })  
-   }
    $('#file-input').change(function(e) {
         var file = e.target.files[0],
             imageType = /image.*/;

@@ -45,6 +45,7 @@ html {
 
 body {
   margin: 0;
+  overflow-y: hidden
 }
 
 a {
@@ -6118,7 +6119,7 @@ button.close {
 	width: 100%
 }
 .user-info .info-profile{
-	min-height: 70px;
+	min-height: 80px;
 }
 .user-info .info-profile h3 {
     margin-bottom: 0;
@@ -6156,6 +6157,9 @@ button.close {
     float: left;
     width: 40px;
 }
+.user-info .btn-danger{
+	margin-top: 5px
+}
 .footbutton .leftb i {
     margin-left: 5px;
 }
@@ -6174,6 +6178,7 @@ button.close {
     line-height: 40px
 }
 .user-info .info-profile p.ellipsis{
+    margin-bottom: 10px;
     overflow: auto;
     text-overflow: inherit;
     white-space:normal;
@@ -6210,6 +6215,26 @@ button.close {
 .info .close{
 	margin-right: 10px;
 	color: #fff
+}
+.suremod .modal-dialog{
+    max-width: 350px;
+    top: 30%;
+}
+.suremod .modal-header{
+	background-color: #979797;
+	border-radius: 0px
+}
+.suremod .modal-title {
+	margin-left:20px;
+	color: #fff
+}
+.suremod .close{
+	margin-right: 10px;
+	color: #fff
+}
+.suremod .modal-footer{
+	  padding: 5px;
+	  margin-top: 0px
 }
 .modal {
   position: fixed;
@@ -6410,6 +6435,16 @@ button.close {
      margin-top:-4px
   }
   .info .modal-content{
+	  height: auto;
+  }
+  .suremod .modal-dialog{
+	  width: auto;
+	  margin: 20px;
+  }
+  .suremod .modal-header .close{
+     margin-top:-4px
+  }
+  .suremod .modal-content{
 	  height: auto;
   }
   .modal-header .close {

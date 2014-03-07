@@ -5,6 +5,12 @@ Coming you can create your app based in M2S with our api.
 To learn how it works the api and more enter here:
 http://jaumesegarra.github.io/M2S-API/ or test online in http://jaumesegarra.github.io/M2S
 
+New in 0.3.6.1
+===
+ - Fix some bugs
+ - Accept or block people which want join to your group
+ - You can join to groups!
+
 New in 0.3.6
 ===
  - Chat with your groups
