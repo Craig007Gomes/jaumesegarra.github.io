@@ -3,13 +3,14 @@
    }
    var user = localStorage.getItem('user');
    var passmd5 = localStorage.getItem('passwd');
-
+   var keyuser = localStorage.getItem('keyuser');
+   
    function linkscom(textdf){
             var str = textdf;
             var exp = /((https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])(?=([^"']*["'][^"']*["'])*[^"']*$)/ig;
             var exp2 = /((https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]+\.(?:jpe?g|gif|png))(?=([^"']*["'][^"']*["'])*[^"']*$)/ig;
             var exp3 = /(?:http:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/ig;
-            var images = str.replace(exp2, "<img src='$1' alt='$1' class='image-chat'/>");
+            var images = str.replace(exp2, "<div class='imagechat' style='background-image:url($1)' alt='$1'></div>");
             var youtube = images.replace(exp3,"<div id='maxwidthyo'><div class='videoWrapper'><iframe frameborder='0' allowfullscreen src='http://www.youtube.com/embed/$1'/></div></div>");
             var links = youtube.replace(exp,"<a href='$1' target='_blank'>$1</a>");
             return links
@@ -18,7 +19,7 @@
      $.ajax({
        type: "GET",
        crossDomain: true,
-       url: "http://m2s.es/app/api/connect/acceptpjg.php?id="+idgroup+"&iduser="+id,
+       url: "http://m2s.es/app/api/connect/acceptpjg.php?id="+idgroup+"&iduser="+id+'&key='+keyuser,
        cache:false,
        dataType: 'jsonp',
        beforeSend: function() {
@@ -44,7 +45,7 @@
      $.ajax({
        type: "GET",
        crossDomain: true,
-       url: "http://m2s.es/app/api/connect/blockpjg.php?id="+idgroup+"&iduser="+id,
+       url: "http://m2s.es/app/api/connect/blockpjg.php?id="+idgroup+"&iduser="+id+'&key='+keyuser,
        cache:false,
        dataType: 'jsonp',
        beforeSend: function() {
@@ -70,7 +71,7 @@
                        $.ajax({
                          type: "GET",
                          crossDomain: true,
-                         url: "http://m2s.es/app/api/connect/acceptfriend.php?id="+id,
+                         url: "http://m2s.es/app/api/connect/acceptfriend.php?id="+id+'&key='+keyuser,
                          cache:false,
                          dataType: 'jsonp',
                          beforeSend: function() {
@@ -99,7 +100,7 @@
                        $.ajax({
                          type: "GET",
                          crossDomain: true,
-                         url: "http://m2s.es/app/api/connect/blockfriend.php?id="+id,
+                         url: "http://m2s.es/app/api/connect/blockfriend.php?id="+id+'&key='+keyuser,
                          cache:false,
                          dataType: 'jsonp',
                          beforeSend: function() {
@@ -125,7 +126,7 @@
 	   $.ajax({
           type: "GET",
           crossDomain: true,
-          url: "http://m2s.es/app/api/notifications.php",
+          url: 'http://m2s.es/app/api/notifications.php'+'?key='+keyuser,
           cache:false,
           dataType: 'jsonp',
           success: function(result) {
@@ -188,10 +189,6 @@
                })
               }
              }
-             if(result.nosession == '1'){
-	            login(user,passmd5,'session');
-	            console.log('No session')
-             }else{
              if(result.newnotication != '0'){
                 if (Notification) {
                   var title = "You have new notifications!"
@@ -244,7 +241,6 @@
 		         $('#contents').css('padding-top','0px');
 	           }  
             }
-            };
           }
       })
    }
@@ -257,23 +253,11 @@
    function signout(){
    suremod('Are you sure that you want sign out in M2S? You will not receive more notifications until you login again it','signoutbutton');
    $('#signoutbutton').click(function(){
-	   $.ajax({
-          type: "GET",
-          crossDomain: true,
-          url: "http://m2s.es/app/api/connect/signout.php",
-          cache:false,
-          dataType: 'jsonp',
-          success: function(result) {
-             if(result.mensaje == 'ok'){
-	              localStorage.removeItem('user');
-	              localStorage.removeItem('passwd');
-	              window.location.href="login.html"
-             }else{
-	             console.log('Error to sign out')
-             }
-          }
-       })
-     });
+	   localStorage.removeItem('user');
+	   localStorage.removeItem('passwd');
+	   localStorage.removeItem('keyuser');
+	   window.location.href="login.html"
+   });
    }
    function infogroup(id){
          usermod('');
@@ -281,7 +265,7 @@
           type: "GET",
           crossDomain: true,
           url: "http://m2s.es/app/api/groupinfo.php",
-          data: "id="+id,
+          data: 'id='+id+'&key='+keyuser,
           cache:false,
           dataType: 'jsonp',
           beforeSend: function() {
@@ -359,7 +343,7 @@
                  $.ajax({
                    type: "GET",
                    crossDomain: true,
-                   url: "http://m2s.es/app/api/connect/joingroup.php?id="+id,
+                   url: 'http://m2s.es/app/api/connect/joingroup.php?id='+id+'&key='+keyuser,
                    cache:false,
                    dataType: 'jsonp',
                    beforeSend: function() {
@@ -387,7 +371,7 @@
                  $.ajax({
                    type: "GET",
                    crossDomain: true,
-                   url: "http://m2s.es/app/api/connect/leavegroup.php?id="+id,
+                   url: 'http://m2s.es/app/api/connect/leavegroup.php?id='+id+'&key='+keyuser,
                    cache:false,
                    dataType: 'jsonp',
                    beforeSend: function() {

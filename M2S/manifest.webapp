@@ -1,0 +1,26 @@
+{
+  "name": "M2S - Free SMS",
+  "description": "Chatea con tus amigos en todas partes , da igual si estan en el espacio o en la tierra",
+  "launch_path": "/index.html",
+  "icons": {
+    "128": "/logos/icon-114.png",
+    "60": "/logos/icon-60.png"
+  },
+  "permissions": {
+    "geolocation": {
+      "description": "Required for autocompletion in the share screen"
+    },      
+    "desktop-notification": {
+      "description": "Para avisarte de las notificaciones."
+    },
+    "device-storage:pictures": {
+      "description": "Para compartir imagenes",
+      "access": "readonly"
+    }
+  },
+  "developer": {
+    "name": "Jaume Segarra",
+    "url": "http://message2space.es.vu"
+  },
+  "default_locale": "es"
+}

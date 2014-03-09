@@ -10,13 +10,13 @@ var input = document.getElementById('search-input');
             lis[i].style.display = 'none';
     }
    }
-
+    var keyuser = localStorage.getItem('keyuser');
     var divs = '';
 	   $.ajax({
           type: "GET",
           jsonpCallback:'jpCallback',
           crossDomain: true,
-          url: "http://m2s.es/app/api/getfriends.php",
+          url: "http://m2s.es/app/api/getfriends.php?key="+keyuser,
           cache:false,
           dataType: 'jsonp',
           success: function(result) {
@@ -56,7 +56,7 @@ function loadchat(id, type){
 	   $.ajax({
             type: "GET",
             crossDomain: true,
-            url: "http://m2s.es/app/api/chat.php?id="+id,
+            url: "http://m2s.es/app/api/chat.php?id="+id+"&key="+keyuser,
             cache:false,
             dataType: 'jsonp',
             success: function(data) {
@@ -202,6 +202,10 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
                 if (!event.shiftKey) sendmsm()
               }
        });
+       $("textarea[name='txt']").click(function(){
+         var d = $('.'+'chat-messages .center');
+         d.scrollTop(d.prop("scrollHeight"));
+       });
        loadchat(id,'pr');
        }
    function deletemessage(id){
@@ -209,7 +213,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
 	   $.ajax({
             type: "GET",
             crossDomain: true,
-            url: "http://m2s.es/app/api/connect/delete-message.php?id="+id,
+            url: "http://m2s.es/app/api/connect/delete-message.php?id="+id+"&key="+keyuser,
             cache:false,
             dataType: 'jsonp',
             success: function(data) {
@@ -243,7 +247,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
         type: "GET",
         crossDomain: true,
         url: "http://m2s.es/app/api/connect/chat.php",
-        data: "txt="+text+"&map="+map+"&id="+id,
+        data: "txt="+text+"&map="+map+"&id="+id+"&key="+keyuser,
         cache:false,
         dataType: 'jsonp',
         beforeSend: function() {
@@ -273,7 +277,7 @@ $(document).ready(function() {
    });
    $(window).resize(function() {
 	  if($(window).width() > '500'){
-	    if($('#forw').lenght != '0'){
+	    if($('#forw').length != '0'){
 		    $('.nav.navbar-nav li').css('display','inline-block');
 		    $('#forw').remove();
 		    $('.chat-messages').removeAttr("style");
@@ -286,6 +290,12 @@ $(document).ready(function() {
 	    }
 	    if($('footer').is(":visible")){
 	        $('footer').hide();
+	    } 
+	    if($('.foot-space').length == '0'){
+	         var messageschatdd = $('.chat-messages').html();
+	         $('.chat-messages').html('<div class="foot-space">'+messageschatdd+'</div>');
+	         var d = $('.'+'chat-messages .center');
+	         d.scrollTop(d.prop("scrollHeight"));
 	    } 
 	  } 
 	  if($(window).width() <= '500'){
@@ -307,6 +317,7 @@ $(document).ready(function() {
 	      }
 	  }
    });
+      
    function urlchange(){
    var urlas = urlast();
    if(urlas != undefined){
@@ -372,7 +383,7 @@ $(document).ready(function() {
         type: "GET",
         jsonpCallback:'jpCallback',
         crossDomain: true,
-        url: "http://m2s.es/app/api/profileinfo.php?username="+valueinput,
+        url: "http://m2s.es/app/api/profileinfo.php?username="+valueinput+"&key="+keyuser,
         cache:false,
         dataType: 'jsonp',
         success: function(data) {
@@ -416,7 +427,7 @@ $(document).ready(function() {
           type: "GET",
           crossDomain: true,
           url: "http://m2s.es/app/api/connect/addfriend.php",
-          data: "id="+id,
+          data: "id="+id+"&key="+keyuser,
           cache:false,
           dataType: 'jsonp',
           beforeSend: function() {
