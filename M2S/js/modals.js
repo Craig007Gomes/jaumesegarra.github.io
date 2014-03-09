@@ -33,3 +33,11 @@ function usermod(text){
       $('.fade.user-info').remove();
     });
 }
+
+function imagemod(image){
+	$(document.body).append('<div class="modal fade image" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><img src="'+image+'"/></div></div></div></div>');
+    $('.fade.image').modal('show');
+    $('.fade.image').on('hidden.bs.modal', function (e) {
+      $('.fade.image').remove();
+    });
+}

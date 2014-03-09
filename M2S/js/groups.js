@@ -100,6 +100,10 @@ function loadchat(id, type){
               var d = $('.'+'chat-messages .center');
 	          d.scrollTop(d.prop("scrollHeight"));
             }
+            $('.imagechat').click(function(){
+             var urlimg = $(this).attr('alt');
+             imagemod(urlimg);
+            })
            }
          });
 function crearmsmd(id,username,iduser,imgr,textmsm,locat,admin,fecha,me,stick,tableid){
@@ -238,10 +242,6 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,admin,fecha,me,stick,ta
                 if (!event.shiftKey) sendmsm()
               }
        });
-       $("textarea[name='txt']").click(function(){
-         var d = $('.'+'chat-messages .center');
-         d.scrollTop(d.prop("scrollHeight"));
-       });
        }
    function deletemessage(id){
 	   id = id.toString();
@@ -371,8 +371,7 @@ $(document).ready(function() {
 	           $('.nav.navbar-nav li').show();
 	           $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
 	           $('footer').hide();
-	   })
- 
+	           })
 	        }
 	      }  
 	      if(!$('#add-people').is(":visible")){
@@ -380,6 +379,8 @@ $(document).ready(function() {
 	           $('footer').show();
 	        } 
 	      }
+	      var d = $('.'+'chat-messages .center');
+          d.scrollTop(d.prop("scrollHeight"));
 	  }
    });
    if($(window).width() <= '500'){
@@ -540,7 +541,7 @@ $(document).ready(function() {
         type: "GET",
         jsonpCallback:'jpCallback',
         crossDomain: true,
-        url: "http://m2s.es/app/api/searchgroups.php?s="+valueinput,
+        url: "http://m2s.es/app/api/searchgroups.php?s="+valueinput+"&key="+keyuser,
         cache:false,
         dataType: 'jsonp',
         success: function(data) {
@@ -582,16 +583,11 @@ $(document).ready(function() {
         reader.readAsDataURL(file);
         
      });
-    var MAX_HEIGHT = 100;
     function fileOnload(e) {
         var $img = $('<img>', { src: e.target.result });
         var canvas = $('#canvas')[0];
         $('#file-input').val('');
         $img.load(function() {
-            if(this.height > MAX_HEIGHT) {
-			 this.width *= MAX_HEIGHT / this.height;
-			 this.height = MAX_HEIGHT;
-		    }
 		    var context = canvas.getContext('2d');
 		    context.clearRect(0, 0, canvas.width, canvas.height);
 		    canvas.width = this.width;

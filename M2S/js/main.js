@@ -213,6 +213,7 @@
                 }
             }
             if(result.notification != '0'){
+              if($('#notify-mobile').length == '0'){
 		        $('.navbar-fixed-top').css('height','70px');
 		        var notifyb = '<div id="notify-mobile">You have notifications!</div>';
 		        $('.navbar-fixed-top').prepend(notifyb);
@@ -234,6 +235,7 @@
 		        $('#notify-mobile').click(function(){
 			       litsnotify();
 		        })
+		        }
             }else{
 	           if($('#notify-mobile').length != '0'){
 		         $('.navbar-fixed-top').css('height','auto');  

@@ -6236,6 +6236,25 @@ button.close {
 	  padding: 5px;
 	  margin-top: 0px
 }
+.fade.modal.image .modal-dialog{
+	width: -moz-max-content;
+}
+.fade.modal.image .modal-header{
+	background: none;
+	border-bottom: 0px;
+	padding: 0px
+}
+.fade.modal.image .modal-header .close{
+	color: #FFFFFF;
+    font-size: 27px;
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
+.fade.image .modal-header > img{
+	min-width: 300px;
+    z-index: -100;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -6391,31 +6410,33 @@ button.close {
 .modal-footer .btn-block + .btn-block {
   margin-left: 0;
 }
-
+@media screen and (max-height: 350px) {
+  div.imagechat{
+	  height: 50%
+  }
+}
 @media screen and (max-width: 520px) {
-  .modal-content{
-    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-    height: 100%;
-    border-radius: 0px !important;
+  .center #loading-user{
+	text-align: center;
+	position: relative;
+	top: 50%;
+	margin-top:-10px
+   }
+  .modal.fade.in{
+	  padding-left: 10px;
+	  padding-right: 10px
   }
   .modal-dialog{
 	  width: 100%;
-	  margin: 0px;
-  }
-  .modal-body{
-	  height: -webkit-calc(100% - 50px);
-	  height: -moz-calc(100% - 50px);
-	  height: -o-calc(100% - 50px);
-	  height: calc(100% - 50px);
-  }
-  .modal-body .tab-content {
-    height: 100%;
   }
   .modal-body .tab-content > .active {
     display: block;
     height: inherit;
     overflow: auto;
+    max-height: 340px;
+  }
+  #stickers{
+	  text-align: center
   }
   .error .modal-dialog{
 	  width: auto;
@@ -6454,7 +6475,22 @@ button.close {
   }
   .user-info .modal-header .close{
 	margin-top: -4px;
-}
+  }
+  .fade.modal.image.in{
+	  padding-left: 10px;
+	  padding-right: 10px
+  }
+  .fade.modal.image .modal-sm.modal-dialog{
+	width: 100%;
+	margin: 30px auto
+  }
+  .fade.modal.image .modal-sm .modal-content{
+    height: auto
+  }
+  .fade.modal.image .modal-sm .modal-header img{
+	width: 100%;
+	min-width: 0px
+  }
 }
 
 .tooltip {
