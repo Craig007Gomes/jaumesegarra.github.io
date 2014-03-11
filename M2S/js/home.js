@@ -126,7 +126,7 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
         }else{
          msm = '<div id="'+id+'" class="sms">';
         }
-        msm+='<a href="#" onclick="usermod('+iduser+')">';
+        msm+='<a href="#" onclick="infouser('+iduser+')">';
         msm+= '<img src="'+imgr+'" class="imgp"/></a>';
         if(stick == '1'){
          msm+= '<blockquote style="position:relative;top:-15px;margin-bottom: -7px;">';

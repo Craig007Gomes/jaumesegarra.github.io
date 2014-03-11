@@ -189,6 +189,10 @@
                })
               }
              }
+             if(result.nosession == '1'){
+ 	            login(user,passmd5,'session');
+ 	            console.log('No session');
+             }else{
              if(result.newnotication != '0'){
                 if (Notification) {
                   var title = "You have new notifications!"
@@ -243,6 +247,7 @@
 		         $('#contents').css('padding-top','0px');
 	           }  
             }
+           }
           }
       })
    }
@@ -257,8 +262,26 @@
    $('#signoutbutton').click(function(){
 	   localStorage.removeItem('user');
 	   localStorage.removeItem('passwd');
-	   localStorage.removeItem('keyuser');
-	   window.location.href="login.html"
+	   if(keyuser){
+	     localStorage.removeItem('keyuser');
+	     window.location.href="login.html"
+	   }
+	   $.ajax({
+           type: "GET",
+           crossDomain: true,
+           url: "http://m2s.es/app/api/connect/signout.php",
+           cache:false,
+           dataType: 'jsonp',
+           success: function(result) {
+              if(result.mensaje == 'ok'){
+ 	              localStorage.removeItem('user');
+ 	              localStorage.removeItem('passwd');
+ 	              window.location.href="login.html"
+              }else{
+ 	             console.log('Error to sign out')
+              }
+           }
+        })
    });
    }
    function infogroup(id){
@@ -290,7 +313,16 @@
               if(image != null){
 	            modaluser += '<img src="'+image+'"/><div class="info-profile" style="padding-left:80px">';   
               }else{
-	            modaluser += '<div class="info-profile">';   
+                var namesplit = name.split(' ');
+                abv1 = namesplit[0].charAt(0);
+                if(namesplit[1]){
+	               abv2 = namesplit[1].charAt(0);
+	               abv = abv1 + abv2;
+                }else{
+	               abv = abv1;
+                }
+	            modaluser += '<div class="img" style="background-color:#777"><p unselectable="on" onselectstart="return false;" onmousedown="return false;">'+abv+'</p></div>';
+	            modaluser += '<div class="info-profile" style="padding-left:80px">';   
               }
               modaluser += '<h3>'+name+'</h3>';
               modaluser += '<a href="#" id="read_more"><p>'+decription+'</p></a>';
@@ -300,9 +332,40 @@
 	            if(admininfo != 'me'){
 		          modaluser += '<a id="leavegroupbutton" class="btn btn-danger">Leave group</a>';   
 	            }
+	            if(result.states != ''){
+		           modaluser += '<div class="states"><h5>States</h5>'; 
+		           for(var i = 0; i < result.states.length; i++){ 
+		             idt = result.states[i].id;
+		             text = result.states[i].text;
+		             date = result.states[i].date;
+		             locationgg = result.states[i].location;
+		             if(admininfo != 'me'){
+		               mens = '';
+		             }else{
+			           mens = 'me';
+		             }
+		             if(image != null){
+		               imaged = '<img src="'+image+'"/>';
+		             }else{
+			           imaged = '<div class="img" style="background-color:#777"><p unselectable="on" onselectstart="return false;" onmousedown="return false;">'+abv+'</p></div>'; 
+		             }
+		             if(locationgg.latitude != ''){
+                       longitud = locationgg.longitud;
+                       locatisn = '<iframe marginheight="0" marginwidth="0" src="http://maps.google.com/maps?client=safari&ll='+locationgg.latitude+','+longitud+'&z=14&output=embed" frameborder="0" scrolling="no" style="height: 24%;max-height: 200px;max-width: 700px;width: 100%;"></iframe>';   
+                     }else{
+	                   locatisn = ''; 
+                     }
+		             modaluser +='<div class="sms '+mens+'" id="'+idt+'"><blockquote>'+imaged+'<p>'+text+'</p>'+locatisn+'<div class="foot">'+date+'</div></blockquote></div>';
+		           }
+		           modaluser += '</div>';
+	            }
               }
-              if(result.yourstate == '0'){
-	            modaluser += '<a id="joingroupbutton" class="btn btn-default">Join to this group</a>';
+              if(result.yourstate == null || result.yourstate == '0'){
+                if(!result.yourstate){
+	              modaluser += '<a id="joingroupbutton" class="btn btn-default">Join to this group</a>';
+	            }else{
+		          modaluser += '<a class="btn btn-default" disabled>Wait for accepting...</a>';  
+	            }
 	            if(admininfo != null || peoplejoin != '0'){
 	            modaluser += '<div class="footbutton">';
 	            if(admininfo != null){
@@ -341,6 +404,7 @@
                  }
                  document.location.href = 'groups.html#chat-'+id;
               })
+              if(!result.yourstate){
               $('#joingroupbutton').click(function(){
                  $.ajax({
                    type: "GET",
@@ -350,7 +414,7 @@
                    dataType: 'jsonp',
                    beforeSend: function() {
                      console.log('Connecting...');
-                     $('#joingroupbutton').addAttr('disabled','disabled');
+                     $('#joingroupbutton').attr('disabled','disabled');
                      $('#joingroupbutton').html('Loading...');
                    },
                    success: function(data) {
@@ -362,10 +426,13 @@
 	                     $('.fade.user-info').modal('hide');
 	                     infomod('Wait for the group admin accept you');  
                        }
+                     }else{
+	                   console.error('Error to join a group: '+ data.mensaje);
                      }
                    }
                  })
               });
+              }
               $('#leavegroupbutton').click(function(){
               $('.modal').modal('hide');
               suremod('Are you sure that you want leave this group?','leaveconfirm');
@@ -392,4 +459,7 @@
              })
           }   
      })  
+   }
+   function infouser(id){
+	  usermod('<p style="text-align:center">Coming...</p>');
    }

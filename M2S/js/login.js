@@ -1,4 +1,4 @@
-function login(usern,pass){
+function login(usern,pass,type){
 	  $.ajax({
           type: "GET",
           crossDomain: true,
@@ -8,26 +8,52 @@ function login(usern,pass){
           dataType: 'jsonp',
           beforeSend: function() {
           console.log('Connecting...');
-          $('#formsd').css('display','none');
-          var sending = '<div id="sending-load"><img src="css/load-login.gif"></div>';
-          $('.form').append(sending);
+          if(type == 'login'){
+            $('#formsd').css('display','none');
+            var sending = '<div id="sending-load"><img src="css/load-login.gif"></div>';
+            $('.form').append(sending);
+          }
           },
           success: function(result) {
             if(result.mensaje == 'OK'){
-             if (localStorage) {
-              keyuser = result.key;
-              keyuser = keyuser.replace('==','');
-              localStorage.setItem("keyuser", keyuser); 
-              localStorage.setItem("user", usern);  
-              localStorage.setItem("passwd", pass); 
-              setInterval(function(){
-              window.location.href="index.html";
-              },4000);
-             }else{
-	           alert('This app needs localstorage!')
-             };
-             console.log('Completed session');
-             };
+              if(type == 'key'){
+	             keyuser = result.key;
+                 keyuser = keyuser.replace('==','');
+                 localStorage.setItem("keyuser", keyuser); 
+                 var href = $(location).attr('href'); 
+ 	             window.location.href = href;
+              }
+              if(type == 'login'){
+                if (localStorage) {
+                  localStorage.setItem("user", usern);  
+                  localStorage.setItem("passwd", pass); 
+                  setInterval(function(){
+                    window.location.href="index.html";
+                  },4000);
+                }else{
+	              alert('This app needs localstorage!')
+                };
+              }else{ 
+               if(type == 'session'){
+	             $.ajax({
+                   type: "GET",
+                   crossDomain: true,
+                   url: 'http://m2s.es/app/api/notifications.php',
+                   cache:false,
+                   dataType: 'jsonp',
+                   success: function(result) {
+                     if(result.nosession){
+                       login(user,passmd5,'key');
+                     }else{
+	                   var href = $(location).attr('href'); 
+ 	                   window.location.href = href;  
+                     }
+                   }
+                 })
+               }
+              }
+              console.log('Completed session');
+              };
             if(result.mensaje == 'e2'){
               var Android;
               if(Android===undefined){

@@ -6102,13 +6102,14 @@ button.close {
   border-radius: 6px
 }
 .user-info .modal-title{
-	margin: 0 auto 0 20px;
+	margin-top: -1px;
+    width: 100%;
 }
 .user-info .modal-body #loading-user {
     text-align: center;
 }
 .user-info .head {
-    margin-top: -25px;
+    margin-top: -15px;
 }
 .user-info .head img {
     border-radius: 35px;
@@ -6159,6 +6160,36 @@ button.close {
 }
 .user-info .btn-danger{
 	margin-top: 5px
+}
+.user-info .img{
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    color: #fff;
+    float: left
+}
+.user-info .img p {
+    font-size: 24px;
+    line-height: 70px;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: default
+}
+.user-info .states .img {
+    border-radius: 27px;
+    height: 55px;
+    left: 12px;
+    margin-top: -8px;
+    position: fixed;
+    width: 55px;
+}
+.user-info .states .me .img {
+   right: 12;
+   left: auto
+}
+.user-info .states .img p{
+    font-size: 20px;
+    line-height: 55px;
 }
 .footbutton .leftb i {
     margin-left: 5px;
