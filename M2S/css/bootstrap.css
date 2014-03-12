@@ -215,7 +215,14 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
+#people-bar > #create-group h5{
+    margin-top: 0px;
+    text-align: center
+}
+#people-bar > #create-group button{
+	width: 100%;
+	margin-bottom: 5px
+}
 @media print {
   * {
     color: #000 !important;
@@ -512,7 +519,16 @@ p {
     font-size: 21px;
   }
 }
-
+@media (min-width: 500px) {
+  #people-bar > #create-group {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  #people-bar > #search-group {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
 small,
 .small {
   font-size: 85%;
@@ -2020,7 +2036,10 @@ fieldset[disabled] .form-control {
 textarea.form-control {
   height: auto;
 }
-
+textarea.form-control.widthfix {
+  min-width: 100%;
+  max-width: 100%
+}
 .form-group {
   margin-bottom: 15px;
 }
@@ -4665,6 +4684,17 @@ footer a:focus{
     color: #fff;
 	text-decoration: none;
 }
+footer .icons {
+    font-size: 18px;
+}
+footer .icons.right{
+	float: right;
+	margin-right: 10px
+}
+footer .icons.left{
+	float: left;
+	margin-left: 10px
+}
 #people-bar.people-bar{
 	padding-bottom: 45px
 }
@@ -4762,6 +4792,9 @@ footer a:focus{
     padding-bottom:50px;
     padding-top: 15px;
 }
+#people-bar > #create-group h5{
+    display: none
+  }
 }
 @media (min-width: 768px) {
   .navbar-nav {
@@ -6191,6 +6224,19 @@ button.close {
     font-size: 20px;
     line-height: 55px;
 }
+.user-info h3 span.ok {
+    background-color: #05DD02;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 5px;
+    padding: 2px 4px;
+    position: relative;
+    top: -4px;
+}
+.user-info iframe{
+	margin-bottom:10px;
+	border-radius: 5px
+}
 .footbutton .leftb i {
     margin-left: 5px;
 }
@@ -6221,7 +6267,6 @@ button.close {
 }
 .error .modal-header{
 	background-color: #ff0000;
-	border-radius: 0px
 }
 .error .modal-title {
 	margin-left:20px;
@@ -6237,7 +6282,6 @@ button.close {
 }
 .info .modal-header{
 	background-color: #0096ff;
-	border-radius: 0px
 }
 .info .modal-title {
 	margin-left:20px;
@@ -6253,7 +6297,6 @@ button.close {
 }
 .suremod .modal-header{
 	background-color: #979797;
-	border-radius: 0px
 }
 .suremod .modal-title {
 	margin-left:20px;
@@ -6328,7 +6371,7 @@ button.close {
   background-color: #ffffff;
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 3px;
+  border-radius: 6px;
   outline: none;
   -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
@@ -6356,8 +6399,8 @@ button.close {
 }
 
 .modal-header {
-  border-top-left-radius:6px;
-  border-top-right-radius:6px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
   text-align: center;
   background: none repeat scroll 0 0 #FFFFFF;
   padding-bottom: 8px;

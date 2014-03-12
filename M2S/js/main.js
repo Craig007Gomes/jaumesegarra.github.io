@@ -96,17 +96,17 @@
                          }
                        })
    };
-   function blockfriend(id) {
+   function blockuser(id) {
                        $.ajax({
                          type: "GET",
                          crossDomain: true,
-                         url: "http://m2s.es/app/api/connect/blockfriend.php?id="+id+'&key='+keyuser,
+                         url: "http://m2s.es/app/api/connect/blockuser.php?id="+id+'&key='+keyuser,
                          cache:false,
                          dataType: 'jsonp',
                          beforeSend: function() {
                              console.log('Connecting...');
-                             $('#blockfriend-'+id).attr('disabled', true);
-                             $('#blockfriend-'+id).html('Loading...')
+                             $('#blockuser-'+id).attr('disabled', true);
+                             $('#blockuser-'+id).html('Loading...')
                          },
                          success: function(result) {
                             if(result.mensaje == 'ok'){
@@ -157,7 +157,7 @@
                  if(type == 'friend-request'){
 	               itemlist += ' wants your friend';
 	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend('+id+')">Accept friend</button>';
-	               itemlist += '<button id="blockfriend-'+id+'"  class="btn btn-lg btn-danger" onclick="blockfriend('+id+')">Block</button>';
+	               itemlist += '<button id="blockuser-'+id+'"  class="btn btn-lg btn-danger" onclick="blockuser('+id+')">Block</button>';
                  };
                  if(type == 'message'){
                    msm = result.listnotify[i].msm;
@@ -189,9 +189,9 @@
                })
               }
              }
-             if(result.nosession == '1'){
+             if(result.nosession != null){
+                console.log('No session');
  	            login(user,passmd5,'session');
- 	            console.log('No session');
              }else{
              if(result.newnotication != '0'){
                 if (Notification) {
@@ -324,9 +324,16 @@
 	            modaluser += '<div class="img" style="background-color:#777"><p unselectable="on" onselectstart="return false;" onmousedown="return false;">'+abv+'</p></div>';
 	            modaluser += '<div class="info-profile" style="padding-left:80px">';   
               }
-              modaluser += '<h3>'+name+'</h3>';
+              modaluser += '<h3>'+name;
+              if(official == 'yes'){
+	            modaluser += '<span class="icon ok"></span>'   
+              }
+              modaluser += '</h3>';
               modaluser += '<a href="#" id="read_more"><p>'+decription+'</p></a>';
               modaluser += '</div>';
+              if(local.longitud){
+	            modaluser += '<iframe marginheight="0" marginwidth="0" src="http://maps.google.com/maps?client=safari&ll='+local.latitude+','+local.longitud+'&z=14&output=embed" frameborder="0" scrolling="no" style="height: 24%;max-height: 200px;max-width: 700px;width: 100%;"></iframe>';  
+              }        
               if(result.yourstate == '1'){
 	            modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';  
 	            if(admininfo != 'me'){
@@ -345,7 +352,7 @@
 			           mens = 'me';
 		             }
 		             if(image != null){
-		               imaged = '<img src="'+image+'"/>';
+		               imaged = '<img src="'+image+'" class="img"/>';
 		             }else{
 			           imaged = '<div class="img" style="background-color:#777"><p unselectable="on" onselectstart="return false;" onmousedown="return false;">'+abv+'</p></div>'; 
 		             }
@@ -391,9 +398,12 @@
               });
               $('#chatbutton').click(function(){
                  if (document.location.pathname.indexOf("groups.html") != 0){
-                   if($('#add-people').is(":visible")){	             
-                   $('.fade.user-info').modal('hide');
-                   $('#add-people').hide();
+                   $('.fade').modal('hide');
+                   $('.fade').on('hidden.bs.modal', function (e) {
+	                 $('.fade').remove();
+	               })
+                   if($('#search-group').is(":visible")){	             
+                   $('#search-group').hide();
                    $('#list-friends').show();
                    $('#home').addClass('active');
                    $('#searchgroup').removeAttr('class');
@@ -434,7 +444,6 @@
               });
               }
               $('#leavegroupbutton').click(function(){
-              $('.modal').modal('hide');
               suremod('Are you sure that you want leave this group?','leaveconfirm');
               $('#leaveconfirm').click(function(){
                  $.ajax({
@@ -445,7 +454,7 @@
                    dataType: 'jsonp',
                    beforeSend: function() {
                      console.log('Connecting...');
-                     $('#leavegroupbutton').addAttr('disabled','disabled');
+                     $('#leavegroupbutton').attr('disabled','disabled');
                      $('#leavegroupbutton').html('Loading...');
                    },
                    success: function(data) {
@@ -461,5 +470,133 @@
      })  
    }
    function infouser(id){
-	  usermod('<p style="text-align:center">Coming...</p>');
+	  usermod('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+	  $.ajax({
+        type: "GET",
+        crossDomain: true,
+        url: "http://m2s.es/app/api/profileinfo.php?id="+id,
+        cache:false,
+        dataType: 'jsonp',
+        success: function(data) {
+          username = data.username;
+          imagein = data.imagein;
+          id = data.id;
+          state = data.state;
+          timeago = data.timeago;
+          genre = data.genre;
+          telf = data.telf;
+          birth = data.birt;
+          email = data.email;
+          $('.fade.user-info .modal-body').html('');
+          var modaluser = '';
+          modaluser += '<div class="head"><img src="'+imagein+'"/><div class="info-profile" style="padding-left:80px">';
+          modaluser += '<h3>'+username+'</h3><p id="read_more">'+timeago+'</p></div>';
+          if(state == '1'){
+              modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';
+              modaluser += '<a id="deletefriendbutton" class="btn btn-danger">Delete friend</a>';
+          }else{
+            if(state == '23'){
+              modaluser += '<a class="btn btn-default" disabled>Wait for your friend accept you</a>';
+            }
+            if(state == '5'){
+              modaluser += '<a id="addfriendbutton" class="btn btn-default">Add friend</a>';
+            }
+            if(state == '4'){
+              modaluser += '<a id="settingsbutton" class="btn btn-default">Edit your profile</a>';
+            }
+          }
+          if(state == '1' || state == '4'){
+	          if(data.states != ''){
+		           modaluser += '<div class="states"><h5>States</h5>'; 
+		           for(var i = 0; i < data.states.length; i++){ 
+		             idt = data.states[i].id;
+		             text = data.states[i].text;
+		             date = data.states[i].date;
+		             locationgg = data.states[i].location;
+		             if(state != '4'){
+		               mens = '';
+		             }else{
+			           mens = 'me';
+		             }
+		             imaged = '<img src="'+imagein+'" class="img"/>';
+		             if(locationgg.latitude != ''){
+                       longitud = locationgg.longitud;
+                       locatisn = '<iframe marginheight="0" marginwidth="0" src="http://maps.google.com/maps?client=safari&ll='+locationgg.latitude+','+longitud+'&z=14&output=embed" frameborder="0" scrolling="no" style="height: 24%;max-height: 200px;max-width: 700px;width: 100%;"></iframe>';   
+                     }else{
+	                   locatisn = ''; 
+                     }
+		             modaluser +='<div class="sms '+mens+'" id="'+idt+'"><blockquote>'+imaged+'<p>'+text+'</p>'+locatisn+'<div class="foot">'+date+'</div></blockquote></div>';
+		           }
+		           modaluser += '</div>';
+	            }
+          }
+          $('.fade.user-info .modal-body').append(modaluser);
+          $('#chatbutton').click(function(){
+              if (document.location.pathname.indexOf("index.html") != 0){
+                 $('.fade.user-info').modal('hide');
+                 $('.fade').on('hidden.bs.modal', function (e) {
+	                 $('.fade').remove();
+	             })
+                 if($('#add-people').is(":visible")){	             
+                   $('#add-people').hide();
+                   $('#list-friends').show();
+                   $('#home').addClass('active');
+                   $('#speop').removeAttr('class');
+                   $('footer').show();
+                   $('.modal-backdrop.fade.in').remove();
+                   $('#forw').remove();
+                 }
+              }
+              document.location.href = 'index.html#chat-'+id;
+          });
+          $('#deletefriendbutton').click(function(){
+             suremod('Are you sure you want to remove it as a friend? You cannot receive messages of he or send messages','deletefriendaccept');
+             $('#deletefriendaccept').click(function(){
+               console.log('Deleting friend...');
+               $('.fade.suremod').modal('hide');
+               $('.fade.suremod').on('hidden.bs.modal', function (e) {
+	             $('.fade.suremod').remove();
+	           });
+	           $.ajax({
+                 type: "GET",
+                 crossDomain: true,
+                 url: "http://m2s.es/app/api/connect/deletefriend.php",
+                 data: "id="+id+"&key="+keyuser,
+                 cache:false,
+                 dataType: 'jsonp',
+                 beforeSend: function() {
+                   console.log('Connecting to delete friend...');
+                 },
+                 success: function(result) {
+                   if(result.mensaje == 'ok'){
+                     infomod('Friend deleted succesfully!');
+                   }
+                 }
+               })
+            })
+          })
+          $('#addfriendbutton').click(function(){
+            $.ajax({
+              type: "GET",
+              crossDomain: true,
+              url: "http://m2s.es/app/api/connect/addfriend.php",
+              data: "id="+id+"&key="+keyuser,
+              cache:false,
+              dataType: 'jsonp',
+              beforeSend: function() {
+                console.log('Connecting to send petition of friend...');
+                $('#addfriendbutton').attr('disabled','disabled');
+                $('#addfriendbutton').html('Sending...');
+              },
+              success: function(result) {
+                if(result.mensaje == 'ok'){
+                  $('#addfriendbutton').html('Wait for your friend accept you');
+                }else{
+	               errormod('There has been an error sending friend request, try again later');
+                }
+              }   
+           })
+         })
+        }
+     }); 
    }

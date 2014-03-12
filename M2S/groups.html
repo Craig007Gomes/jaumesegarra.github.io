@@ -36,7 +36,7 @@
             <li><a href="#settings"><span class="icon cog"></span><span class="text">Settings</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li onclick="" id="creategroup" style="display:none"><a href="#"><span class="icon plus" style="position:relative;top:1px"></span></a></li>
+            <li onclick="creategroupbutton()" id="creategroup"><a href="#"><span class="icon plus" style="position:relative;top:1px"></span></a></li>
             <li onclick="searchgroupbutton()" id="searchgroup"><a href="#"><span class="icon search" style="font-size: 20px;"></span></a></li>
             <li><a href="javascript:signout()"><span class="icon remove"></span></a></li>
           </ul>
@@ -50,10 +50,24 @@
       <input type="search" id="search-input" placeholder="Search" class="form-control im_dialogs_search_field ng-pristine ng-valid">
        </div>
      </div>
-     <div id="add-people" style="display:none">
+     <div id="search-group" style="display:none">
 	  <input type="text" id="search-useradd" placeholder="Search anything which you are interested" class="form-control im_dialogs_search_field ng-pristine ng-valid">
 	  <button onclick="submitsearch()" class="btn btn-info" style="width:100%;margin-top:10px">Search</button>   
 	  <div class="search-group-ul"></div>
+     </div>
+     <div id="create-group" style="display:none">
+      <h5>Create a new group</h5>
+	  <input type="text" id="namegroup-cr" placeholder="Name of the group" class="form-control">
+	  <input type="hidden" id="location-cr"/>
+	  <textarea placeholder="Description" id="descriptiongroup-cr" class="form-control widthfix"></textarea>
+	  <label class="checkbox">
+        <input type="checkbox" id="privategroup-cr"> Private
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="showcreator-cr" checked> Show creator of the group
+      </label>
+      <button class="btn btn-default" id="sharelocat-cr">Share location</button>
+      <button class="btn btn-info" id="creategroup-cr">Create group</button>
      </div>
     </ul>
     <div class="chat-messages"> 
@@ -67,7 +81,10 @@
       </div>
     </div>
   </div>
-  <footer><a href="#" onclick="searchgroupbutton()" id="text">Search groups</a></footer>
+  <footer>
+    <a href="#" onclick="creategroupbutton()" class="icons left"><span class="icon plus"></span></a>
+    <a href="#" onclick="searchgroupbutton()" class="icons right"><span class="icon search"></span></a>
+  </footer>
   <div id="modsv"></div>
   <div class="modal fade" id="more-share" tabindex="-1" role="dialog" aria-labelledby="more-share" aria-hidden="true">
   <div class="modal-dialog modal-sm">

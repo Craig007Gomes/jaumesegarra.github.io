@@ -324,10 +324,16 @@ $(document).ready(function() {
 		    $('#forw').remove();
 		    $('.chat-messages').removeAttr("style");
 	    }
-	    if($('#add-people').is(":visible")){
+	    if($('#search-group').is(":visible")){
 		    if($('#home.active').length){
 			    $('#home').removeClass("active");
-	            $('#speop').addClass("active");
+	            $('#searchgroup').addClass("active");
+		    }
+	    }
+	    if($('#create-group').is(":visible")){
+		    if($('#home.active').length){
+			    $('#home').removeClass("active");
+	            $('#creategroup').addClass("active");
 		    }
 	    }
 	    if($('footer').is(":visible")){
@@ -359,13 +365,13 @@ $(document).ready(function() {
                }
                $('#more-share').modal('hide');
 	        }
-	      if($('#add-people').is(":visible")){
+	      if($('#search-group').is(":visible")){
 	        if($('#forw').length == '0'){
 		       $('.nav.navbar-nav li').css('display','none');
 	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Search a group</div></div>');
 	           $('#forw .icon.chevron-left').click(function(){
 	           $('#list-friends').show(); 
-	           $('#add-people').hide();
+	           $('#search-group').hide();
 	           $('footer').show();
 	           $('#forw').remove();
 	           $('.nav.navbar-nav li').show();
@@ -374,7 +380,27 @@ $(document).ready(function() {
 	           })
 	        }
 	      }  
-	      if(!$('#add-people').is(":visible")){
+	      if(!$('#search-group').is(":visible")){
+	        if(!$('footer').is(":visible")){
+	           $('footer').show();
+	        } 
+	      }
+	      if($('#create-group').is(":visible")){
+	        if($('#forw').length == '0'){
+		       $('.nav.navbar-nav li').css('display','none');
+	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Create a group</div></div>');
+	           $('#forw .icon.chevron-left').click(function(){
+	           $('#list-friends').show(); 
+	           $('#create-group').hide();
+	           $('footer').show();
+	           $('#forw').remove();
+	           $('.nav.navbar-nav li').show();
+	           $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	           $('footer').hide();
+	           })
+	        }
+	      }  
+	      if(!$('#create-group').is(":visible")){
 	        if(!$('footer').is(":visible")){
 	           $('footer').show();
 	        } 
@@ -438,23 +464,26 @@ $(document).ready(function() {
    };
    function searchgroupbutton(){
      if($(window).width() > '500'){
+      if($('#creategroup.active').length){
+        creategroupbutton();
+      }
       if($('#home.active').length){
 	   $('#list-friends').hide(); 
-	   $('#add-people').show(); 
+	   $('#search-group').show(); 
 	   $('#home').removeClass("active");
 	   $('#searchgroup').addClass("active");
 	   $('.li-chats').removeClass("active");
 	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
 	   $('#home').click(function(){
 		 $('#list-friends').show(); 
-	     $('#add-people').hide(); 
+	     $('#search-group').hide(); 
 	     $('#home').addClass("active");
 	     $('#searchgroup').removeClass("active");  
 	     $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
 	   });
 	  }else{
 	   $('#list-friends').show(); 
-	   $('#add-people').hide(); 
+	   $('#search-group').hide(); 
 	   $('#home').addClass("active");
 	   $('#searchgroup').removeClass("active"); 
 	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
@@ -462,7 +491,7 @@ $(document).ready(function() {
 	 }
 	 if($(window).width() <= '500'){
 	   $('#list-friends').hide(); 
-	   $('#add-people').show();
+	   $('#search-group').show();
 	   $('footer').hide();
 	   $('.nav.navbar-nav li').css('display','none');
 	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Search a group</div></div>');
@@ -470,7 +499,7 @@ $(document).ready(function() {
 	   $('#spaces').css('height','20px');
 	   $('#forw .icon.chevron-left').click(function(){
 	      $('#list-friends').show(); 
-	      $('#add-people').hide();
+	      $('#search-group').hide();
 	      $('footer').show();
 	      $('#forw').remove();
 	      $('.nav.navbar-nav li').show();
@@ -659,4 +688,113 @@ $(document).ready(function() {
         }
         }
         });
-   
+   function creategroupbutton(){
+     if($(window).width() > '500'){
+      if($('#searchgroup.active').length){
+        searchgroupbutton();
+      }
+      if($('#home.active').length){
+	   $('#list-friends').hide(); 
+	   $('#create-group').show(); 
+	   $('#home').removeClass("active");
+	   $('#creategroup').addClass("active");
+	   $('.li-chats').removeClass("active");
+	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	   $('#home').click(function(){
+		 $('#list-friends').show(); 
+	     $('#create-group').hide(); 
+	     $('#home').addClass("active");
+	     $('#creategroup').removeClass("active");  
+	     $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	   });
+	  }else{
+	   $('#list-friends').show(); 
+	   $('#create-group').hide(); 
+	   $('#home').addClass("active");
+	   $('#creategroup').removeClass("active"); 
+	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	  }
+	 }
+	 if($(window).width() <= '500'){
+	   $('#list-friends').hide(); 
+	   $('#create-group').show();
+	   $('footer').hide();
+	   $('.nav.navbar-nav li').css('display','none');
+	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Create a group</div></div>');
+	   $('#contents').css('padding-bottom','0px');
+	   $('#spaces').css('height','20px');
+	   $('#forw .icon.chevron-left').click(function(){
+	      $('#list-friends').show(); 
+	      $('#create-group').hide();
+	      $('footer').show();
+	      $('#forw').remove();
+	      $('.nav.navbar-nav li').show();
+	      $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No group select</h3><p>Select one of your groups for chatting with theirs</p></div></div></div>');
+	      $('#contents').css('padding-bottom','50px');
+	      $('#spaces').css('height','60px');
+	   })
+	 }
+  }
+  $('#sharelocat-cr').click(function(){
+    if($('#sharelocat-cr').hasClass("btn-default")){
+      if(navigator.geolocation){
+        $('#sharelocat-cr').attr('disabled','disabled');
+        $('#sharelocat-cr').html('Loading...');
+        navigator.geolocation.getCurrentPosition(function(pods){
+	      var latitud = pods.coords.latitude;
+          var longitud = pods.coords.longitude;
+          $('#location-cr').val(latitud+' '+longitud);
+          $('#sharelocat-cr').removeAttr('disabled');
+          $('#sharelocat-cr').addClass('btn-danger');
+          $('#sharelocat-cr').removeClass('btn-default');
+          $('#sharelocat-cr').html('Remove location');
+        });
+      }else{
+        alert("Your browser doesn't the location API");  
+      }
+    }else{
+      $('#sharelocat-cr').html('Share location');
+	  $('#sharelocat-cr').removeClass('btn-danger');
+      $('#sharelocat-cr').addClass('btn-default'); 
+      $('#location-cr').val('');
+    }
+  })
+  $('#creategroup-cr').click(function(){
+     namegr = $('#namegroup-cr').val();
+     if($('#namegroup-cr').val()){
+       descgr = $('#descriptiongroup-cr').val();
+       locgr = $('#location-cr').val();
+       if($('#privategroup-cr').is(':checked')){
+         privategr = 'yes';
+       }else{
+	     privategr = 'no';
+       }
+       if($('#showcreator-cr').is(':checked')){
+         showcreatr = 'yes';
+       }else{
+	     showcreatr = 'no';
+       }
+       $.ajax({
+        type: "GET",
+        jsonpCallback:'jpCallback',
+        crossDomain: true,
+        url: "http://m2s.es/app/api/connect/creategroup.php",
+        data: {
+            name: namegr,
+            description: descgr,
+            location: locgr,
+            private: privategr,
+            showcreator: showcreatr
+        },
+        cache:false,
+        dataType: 'jsonp',
+        success: function(data) {
+          if(data.mensaje = 'ok'){
+	          document.location.href='groups.html';
+          }
+        }
+      })
+     }else{
+	     errormod("The name of group mustn't be empty");
+     }
+  })
