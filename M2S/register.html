@@ -15,6 +15,7 @@
     <link href="css/signup.css" rel="stylesheet">
     <link rel="stylesheet" href="css/lungo.icon.css">
     <script src="js/jquery.js"></script>
+    <script src="js/require.js"></script> 
     <link rel="stylesheet" href="css/Datepicker/jquery-ui-1.10.4.custom.css">
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script>
@@ -34,21 +35,22 @@
         <h2 class="form-signin-heading"><img src="css/logo.text.png" class="logo"/></h2>
         <div class="form">
         <div id="formsd">
-            <input type="text" name="user" placeholder="Username" class="form-control" value="">
-            <input type="email" name="email" placeholder="Email" class="form-control" value="">
+            <input type="text" name="user" placeholder="Your username" data-translate="yourusername" class="form-control" value="">
+            <input type="email" name="email" placeholder="Your email" data-translate="youremail" class="form-control" value="">
             <select name='genre' class="form-control" required>                                           
-              <option value='male' selected>Male</option>
-              <option value='female'>Female</option>
+              <option value='male' data-translate="male" selected>Male</option>
+              <option value='female' data-translate="female">Female</option>
             </select>
-            <input type="text" name="birthday" id="datepicker" placeholder="Birthday" class="form-control" value="" readonly required>
-            <input type="password" name="pass" placeholder="Password" class="form-control" value="" required>
-            <input type="password" name="confpass" placeholder="Re-enter the password" class="form-control" value="" required>
-            <input type="number" name="telf" placeholder="Mobile phone number" class="form-control" value="">
-            <button class="btn btn-lg btn-login btn-block" onclick="register()" style="-webkit-appearance: none;">Sign Up</button>
-            <a href="login.html" class="btn btn-lg btn-primary btn-block">Go back</a>
+            <input type="text" name="birthday" id="datepicker" placeholder="Your birthday" data-translate="yourbirthday" class="form-control" value="" readonly required>
+            <input type="password" name="pass" placeholder="Your password" data-translate="yourpassword" class="form-control" value="" required>
+            <input type="password" name="confpass" data-translate="yourpasswordconf" placeholder="Re-enter your password" class="form-control" value="" required>
+            <input type="number" name="telf" placeholder="Your mobile phone number" data-translate="yourphonenumber" class="form-control" value="">
+            <button class="btn btn-lg btn-login btn-block" onclick="register()" style="-webkit-appearance: none;" data-translate="signup">Sign Up</button>
+            <a href="login.html" class="btn btn-lg btn-primary btn-block" data-translate="goback">Go back</a>
         </div>
         </div>
     </div>
+    <script type="text/javascript" src="js/language.js"></script>
     <script type="text/javascript" src="js/register.js"></script>
 </body>
 </html>

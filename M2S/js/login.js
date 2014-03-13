@@ -41,8 +41,8 @@ function login(usern,pass,type){
                    url: 'http://m2s.es/app/api/notifications.php',
                    cache:false,
                    dataType: 'jsonp',
-                   success: function(result) {
-                     if(result.nosession){
+                   success: function(data) {
+                     if(data.nosession == '1'){
                        login(user,passmd5,'key');
                      }else{
 	                   var href = $(location).attr('href'); 
@@ -57,23 +57,23 @@ function login(usern,pass,type){
             if(result.mensaje == 'e2'){
               var Android;
               if(Android===undefined){
-               errormod('Data not entered');
+               errormod(Language.datanotenter);
               }else{
-              Android.showDialog('Data not entered');
+              Android.showDialog(Language.datanotenter);
               }
               if(type == 'login'){
               $('#formsd').css('display','block');
               $('#sending-load').remove();
               }
-              console.log('Data not entered');
+              console.log(Language.datanotenter);
             }
             if(result.mensaje == 'e3'){
              if(type == 'login'){
              var Android;
               if(Android===undefined){
-	            errormod('The username or password are incorrect.');
+	            errormod(Language.userpassincorrect);
               }else{
-              Android.showDialog('The username or password are incorrect.');
+              Android.showDialog(Language.userpassincorrect);
               }
               $('#formsd').css('display','block');
               $('#sending-load').remove();
@@ -84,7 +84,7 @@ function login(usern,pass,type){
 	              localStorage.removeItem('passwd');
 	              window.location.href="login.html"
               }
-              console.log('The username or password are incorrect.');
+              console.log(Language.userpassincorrect);
             }
           }   
      })

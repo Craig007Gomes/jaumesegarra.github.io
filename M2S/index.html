@@ -14,7 +14,8 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
     <link rel="stylesheet" href="css/lungo.icon.css">
-    <link rel="stylesheet" href="css/stickers.css">   
+    <link rel="stylesheet" href="css/stickers.css"> 
+    <script src="js/require.js"></script>  
     <script src="js/jquery.js"></script>
     <script src="js/md5.js"></script>
     <script src="js/modals.js"></script>
@@ -30,10 +31,10 @@
         </div>
         <div class="navbar-collapse">
           <ul class="nav navbar-nav" id="menu">
-            <li class="active" id="home"><a href="#"><span class="icon user"></span><span class="text">Home</span></a></li>
-            <li><a href="groups.html"><span class="icon group"></span><span class="text">Groups</span></a></li>
-            <li><a href="#states"><span class="icon pencil"></span><span class="text">States</span></a></li>
-            <li><a href="#settings"><span class="icon cog"></span><span class="text">Settings</span></a></li>
+            <li class="active" id="home"><a href="#"><span class="icon user"></span><span class="text" data-translate="home">Home</span></a></li>
+            <li><a href="groups.html"><span class="icon group"></span><span class="text" data-translate="groups">Groups</span></a></li>
+            <li><a href="#states"><span class="icon pencil"></span><span class="text" data-translate="states">States</span></a></li>
+            <li><a href="#settings"><span class="icon cog"></span><span class="text" data-translate="settings">Settings</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li onclick="speop()" id="speop"><a href="#"><span class="icon plus"></span></a></li>
@@ -46,12 +47,12 @@
     <ul class="people-bar" id="people-bar">
      <div id="list-friends">
        <div style="">
-      <input type="search" id="search-input" placeholder="Search" class="form-control im_dialogs_search_field ng-pristine ng-valid">
+      <input type="search" id="search-input" placeholder="Search" class="form-control im_dialogs_search_field ng-pristine ng-valid" data-translate="search">
        </div>
      </div>
      <div id="add-people" style="display:none">
-	  <input type="text" id="search-useradd" placeholder="Username of your friend" class="form-control im_dialogs_search_field ng-pristine ng-valid">
-	  <button onclick="submitadd()" class="btn btn-info" style="width:100%;margin-top:10px">Search</button>   
+	  <input type="text" id="search-useradd" placeholder="Username of your friend" class="form-control im_dialogs_search_field ng-pristine ng-valid" data-translate="searchusernameadd">
+	  <button onclick="submitadd()" class="btn btn-info" style="width:100%;margin-top:10px" data-translate="search">Search</button>   
 	  <div class="people"></div>
      </div>
     </ul>
@@ -59,14 +60,14 @@
     <div class="foot-space">
       <div class="center">
         <div class="center-align">
-         <h3>No friend select</h3>
-         <p>Select one of your friends for chatting with he</p>
+         <h3 data-translate="nofriendselect">No friend select</h3>
+         <p data-translate="nofriendselectinfo">Select one of your friends for chatting with he</p>
         </div>
       </div>
       </div>
     </div>
   </div>
-  <footer><a href="#" onclick="speop()" id="text">Add friends</a></footer>
+  <footer><a href="#" onclick="speop()" id="text" data-translate="addfriends">Add friends</a></footer>
   <div id="modsv"></div>
   <div class="modal fade" id="more-share" tabindex="-1" role="dialog" aria-labelledby="more-share" aria-hidden="true">
   <div class="modal-dialog modal-sm">
@@ -116,7 +117,7 @@
 	         <a href="javascript:poststick('memesgosd c4-l8')"><div class="memesgosd c4-l8 mini"></div></a>
           </div>
           <div class="tab-pane" id="images"><input type="file" id="file-input"></div>
-          <div class="tab-pane" id="location"><button class="btn btn-info" id="btn-location" style="width:100%;">Share Location</button>  </div>
+          <div class="tab-pane" id="location"><button class="btn btn-info" id="btn-location" style="width:100%;" data-translate="sharelocation">Share Location</button>  </div>
          </div>
       </div>
     </div>
@@ -127,7 +128,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Share Image</h4>
+        <h4 class="modal-title" data-translate="shareimage">Share Image</h4>
       </div>
       <div class="modal-body">
         <center>
@@ -135,8 +136,8 @@
         </center>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="upload-image">Upload Image</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-translate="close">Close</button>
+        <button type="button" class="btn btn-primary" id="upload-image" data-translate="uploadimage">Upload Image</button>
       </div>
     </div>
   </div>
@@ -146,6 +147,7 @@
   <script src="js/quo.query.js"></script>
   <script src="js/quo.events.js"></script>
   <script src="js/quo.gestures.js"></script>
+  <script type="text/javascript" src="js/language.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/home.js"></script>
 </body>

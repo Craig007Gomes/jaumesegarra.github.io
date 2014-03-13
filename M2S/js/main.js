@@ -25,7 +25,7 @@
        beforeSend: function() {
          console.log('Connecting...');
          $('#acceptpeogroup-'+id).attr('disabled', true);
-         $('#acceptpeogroup-'+id).html('Loading...')
+         $('#acceptpeogroup-'+id).html(Language.loading)
        },
        success: function(result) {
          if(result.mensaje == 'ok'){
@@ -51,7 +51,7 @@
        beforeSend: function() {
          console.log('Connecting...');
          $('#blockpeogroup-'+id).attr('disabled', true);
-         $('#blockpeogroup-'+id).html('Loading...')
+         $('#blockpeogroup-'+id).html(Language.loading)
        },
        success: function(result) {
          if(result.mensaje == 'ok'){
@@ -77,7 +77,7 @@
                          beforeSend: function() {
                              console.log('Connecting...');
                              $('#acceptfriend-'+id).attr('disabled', true);
-                             $('#acceptfriend-'+id).html('Loading...')
+                             $('#acceptfriend-'+id).html(Language.loading)
                          },
                          success: function(result) {
                             if(result.mensaje == 'ok'){
@@ -106,7 +106,7 @@
                          beforeSend: function() {
                              console.log('Connecting...');
                              $('#blockuser-'+id).attr('disabled', true);
-                             $('#blockuser-'+id).html('Loading...')
+                             $('#blockuser-'+id).html(Language.loading)
                          },
                          success: function(result) {
                             if(result.mensaje == 'ok'){
@@ -155,28 +155,28 @@
                  itemlist += '<div class="right-img">';
                  itemlist += '<span>'+username+'</span>';
                  if(type == 'friend-request'){
-	               itemlist += ' wants your friend';
-	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend('+id+')">Accept friend</button>';
-	               itemlist += '<button id="blockuser-'+id+'"  class="btn btn-lg btn-danger" onclick="blockuser('+id+')">Block</button>';
+	               itemlist += ' '+Language.wantsyourfriends;
+	               itemlist += '<button id="acceptfriend-'+id+'" class="btn btn-lg btn-info" onclick="acceptfriend('+id+')">'+Language.accept+'</button>';
+	               itemlist += '<button id="blockuser-'+id+'"  class="btn btn-lg btn-danger" onclick="blockuser('+id+')">'+Language.block+'</button>';
                  };
                  if(type == 'message'){
                    msm = result.listnotify[i].msm;
-	               itemlist += ' said you: '+msm;
+	               itemlist += ' '+Language.saidyou+': '+msm;
                    var url = 'index.html#chat-'+id;
-	               itemlist += '<a href="'+url+'" id="close-click"><button class="btn btn-lg btn-info">Read</button></a>';
+	               itemlist += '<a href="'+url+'" id="close-click"><button class="btn btn-lg btn-info">'+Language.read+'</button></a>';
                  };
                  if(type == 'message-group'){
                    msm = result.listnotify[i].msm;
                    namegroup = result.listnotify[i].namegroup;
-	               itemlist += ' said in the group '+namegroup+': '+msm;
-	               itemlist += '<a href="groups.html#chat-'+id+'"><button class="btn btn-lg btn-info">Read</button></a>';
+	               itemlist += ' '+Language.saidingroup+' '+namegroup+': '+msm;
+	               itemlist += '<a href="groups.html#chat-'+id+'"><button class="btn btn-lg btn-info">'+Language.read+'</button></a>';
                  }
                  if(type == 'addgroup-request'){
                    idgroup = result.listnotify[i].idgroup;
                    namegroup = result.listnotify[i].namegroup;
-	               itemlist += ' wants join to your group '+namegroup;  
-	               itemlist += '<button onclick="acceptgrj('+idgroup+','+id+')" id="acceptpeogroup-'+id+'" class="btn btn-lg btn-info">Accept</button>';
-	               itemlist += '<button onclick="blockgrj('+idgroup+','+id+')" id="blockpeogroup-'+id+'" class="btn btn-lg btn-danger">Block</button>';
+	               itemlist += ' '+Language.joinyourgroup+' '+namegroup;  
+	               itemlist += '<button onclick="acceptgrj('+idgroup+','+id+')" id="acceptpeogroup-'+id+'" class="btn btn-lg btn-info">'+Language.accept+'</button>';
+	               itemlist += '<button onclick="blockgrj('+idgroup+','+id+')" id="blockpeogroup-'+id+'" class="btn btn-lg btn-danger">'+Language.block+'</button>';
                  }
                  itemlist += '</div></div>';
                  $('#list-notifications').append(itemlist);
@@ -195,10 +195,10 @@
              }else{
              if(result.newnotication != '0'){
                 if (Notification) {
-                  var title = "You have new notifications!"
+                  var title = Language.havenewnotifications;
                   var extra = {
                     icon: "css/icon.png",
-                    body: "Looks like you are popular in M2S!"
+                    body: Language.havenewnotificationsinfo
                   }
                   var noti = new Notification( title, extra)
                   noti.onclick = function(){litsnotify();}
@@ -208,7 +208,7 @@
                 }else{
                  if(navigator.mozNotification){
 	               var notification = navigator.mozNotification;
-                   var n = notification.createNotification("You have new notifications!", "Looks like you are popular in M2S!","http://m2s.es/app/img/icon-114.png");
+                   var n = notification.createNotification(Language.havenewnotifications, Language.havenewnotificationsinfo,"http://m2s.es/app/img/icon-114.png");
                    n.onclick = function() {
 	                 litsnotify();
                    }
@@ -219,7 +219,7 @@
             if(result.notification != '0'){
               if($('#notify-mobile').length == '0'){
 		        $('.navbar-fixed-top').css('height','70px');
-		        var notifyb = '<div id="notify-mobile">You have notifications!</div>';
+		        var notifyb = '<div id="notify-mobile">'+Language.havenotifications+'</div>';
 		        $('.navbar-fixed-top').prepend(notifyb);
 		        if($(window).width() <= '500'){
 		          $('#contents').css('padding-top','35px');
@@ -258,7 +258,7 @@
      }, 14000);
    });
    function signout(){
-   suremod('Are you sure that you want sign out in M2S? You will not receive more notifications until you login again it','signoutbutton');
+   suremod(Language.suresignout,'signoutbutton');
    $('#signoutbutton').click(function(){
 	   localStorage.removeItem('user');
 	   localStorage.removeItem('passwd');
@@ -295,7 +295,7 @@
           dataType: 'jsonp',
           beforeSend: function() {
           console.log('Connecting...');
-          $('.fade.user-info .modal-body').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+          $('.fade.user-info .modal-body').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>'+Language.loading+'</span></div>');
           },
           success: function(result) {
             id = result.id;
@@ -335,12 +335,12 @@
 	            modaluser += '<iframe marginheight="0" marginwidth="0" src="http://maps.google.com/maps?client=safari&ll='+local.latitude+','+local.longitud+'&z=14&output=embed" frameborder="0" scrolling="no" style="height: 24%;max-height: 200px;max-width: 700px;width: 100%;"></iframe>';  
               }        
               if(result.yourstate == '1'){
-	            modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';  
+	            modaluser += '<a id="chatbutton" class="btn btn-default">'+Language.chat+'</a>';  
 	            if(admininfo != 'me'){
-		          modaluser += '<a id="leavegroupbutton" class="btn btn-danger">Leave group</a>';   
+		          modaluser += '<a id="leavegroupbutton" class="btn btn-danger">'+Language.leavegroup+'</a>';   
 	            }
 	            if(result.states != ''){
-		           modaluser += '<div class="states"><h5>States</h5>'; 
+		           modaluser += '<div class="states"><h5>'+Language.states+'</h5>'; 
 		           for(var i = 0; i < result.states.length; i++){ 
 		             idt = result.states[i].id;
 		             text = result.states[i].text;
@@ -369,16 +369,16 @@
               }
               if(result.yourstate == null || result.yourstate == '0'){
                 if(!result.yourstate){
-	              modaluser += '<a id="joingroupbutton" class="btn btn-default">Join to this group</a>';
+	              modaluser += '<a id="joingroupbutton" class="btn btn-default">'+Language.jointhisgroup+'</a>';
 	            }else{
-		          modaluser += '<a class="btn btn-default" disabled>Wait for accepting...</a>';  
+		          modaluser += '<a class="btn btn-default" disabled>'+Language.waitaccept+'</a>';  
 	            }
 	            if(admininfo != null || peoplejoin != '0'){
 	            modaluser += '<div class="footbutton">';
 	            if(admininfo != null){
 		          modaluser += '<div class="leftb">';
 		          modaluser += '<img src="'+admininfo.imagein+'"/>';
-		          modaluser += '<i>Created by:</i>';
+		          modaluser += '<i>'+Language.createdby+'</i>';
 		          modaluser += '<b>'+admininfo.username+'</b></div>';
 	            }
 	            if(peoplejoin != '0'){
@@ -387,7 +387,7 @@
 		          }else{
 			        modaluser += '<div class="rightb">';  
 		          }
-		          modaluser += '<i>People joined:</i> <b>'+peoplejoin+'</b></div>';
+		          modaluser += '<i>'+Language.peoplejoined+'</i> <b>'+peoplejoin+'</b></div>';
 	            }
 	            }
               }
@@ -425,16 +425,16 @@
                    beforeSend: function() {
                      console.log('Connecting...');
                      $('#joingroupbutton').attr('disabled','disabled');
-                     $('#joingroupbutton').html('Loading...');
+                     $('#joingroupbutton').html(Language.loading);
                    },
                    success: function(data) {
                      if(data.mensaje == 'ok'){
                        if(private == 'no'){
                          $('.fade.user-info').modal('hide');
-                         infomod('Congratulations! You just joined this group!'); 
+                         infomod(Language.congjoingroup); 
                        }else{
 	                     $('.fade.user-info').modal('hide');
-	                     infomod('Wait for the group admin accept you');  
+	                     infomod(Language.waitadminacceptyou);  
                        }
                      }else{
 	                   console.error('Error to join a group: '+ data.mensaje);
@@ -444,7 +444,7 @@
               });
               }
               $('#leavegroupbutton').click(function(){
-              suremod('Are you sure that you want leave this group?','leaveconfirm');
+              suremod(Language.sureleavegroup,'leaveconfirm');
               $('#leaveconfirm').click(function(){
                  $.ajax({
                    type: "GET",
@@ -455,12 +455,12 @@
                    beforeSend: function() {
                      console.log('Connecting...');
                      $('#leavegroupbutton').attr('disabled','disabled');
-                     $('#leavegroupbutton').html('Loading...');
+                     $('#leavegroupbutton').html(Language.loading);
                    },
                    success: function(data) {
                      if(data.mensaje == 'ok'){
                          $('.fade.user-info').modal('hide');
-                         infomod('You have left this group!'); 
+                         infomod(Language.leftgroup); 
                      }
                    }
                  })
@@ -470,11 +470,11 @@
      })  
    }
    function infouser(id){
-	  usermod('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+	  usermod('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>'+Language.loading+'</span></div>');
 	  $.ajax({
         type: "GET",
         crossDomain: true,
-        url: "http://m2s.es/app/api/profileinfo.php?id="+id,
+        url: "http://m2s.es/app/api/profileinfo.php?id="+id+"&key="+keyuser,
         cache:false,
         dataType: 'jsonp',
         success: function(data) {
@@ -492,22 +492,22 @@
           modaluser += '<div class="head"><img src="'+imagein+'"/><div class="info-profile" style="padding-left:80px">';
           modaluser += '<h3>'+username+'</h3><p id="read_more">'+timeago+'</p></div>';
           if(state == '1'){
-              modaluser += '<a id="chatbutton" class="btn btn-default">Chat</a>';
-              modaluser += '<a id="deletefriendbutton" class="btn btn-danger">Delete friend</a>';
+              modaluser += '<a id="chatbutton" class="btn btn-default">'+Language.chat+'</a>';
+              modaluser += '<a id="deletefriendbutton" class="btn btn-danger">'+Language.deletefriend+'</a>';
           }else{
             if(state == '23'){
-              modaluser += '<a class="btn btn-default" disabled>Wait for your friend accept you</a>';
+              modaluser += '<a class="btn btn-default" disabled>'+Language.waitaccept+'</a>';
             }
             if(state == '5'){
-              modaluser += '<a id="addfriendbutton" class="btn btn-default">Add friend</a>';
+              modaluser += '<a id="addfriendbutton" class="btn btn-default">'+Language.addfriend+'</a>';
             }
             if(state == '4'){
-              modaluser += '<a id="settingsbutton" class="btn btn-default">Edit your profile</a>';
+              modaluser += '<a id="settingsbutton" class="btn btn-default">'+Language.edityourprofile+'</a>';
             }
           }
           if(state == '1' || state == '4'){
 	          if(data.states != ''){
-		           modaluser += '<div class="states"><h5>States</h5>'; 
+		           modaluser += '<div class="states"><h5>'+Language.states+'</h5>'; 
 		           for(var i = 0; i < data.states.length; i++){ 
 		             idt = data.states[i].id;
 		             text = data.states[i].text;
@@ -550,7 +550,7 @@
               document.location.href = 'index.html#chat-'+id;
           });
           $('#deletefriendbutton').click(function(){
-             suremod('Are you sure you want to remove it as a friend? You cannot receive messages of he or send messages','deletefriendaccept');
+             suremod(Language.removefriend,'deletefriendaccept');
              $('#deletefriendaccept').click(function(){
                console.log('Deleting friend...');
                $('.fade.suremod').modal('hide');
@@ -569,7 +569,7 @@
                  },
                  success: function(result) {
                    if(result.mensaje == 'ok'){
-                     infomod('Friend deleted succesfully!');
+                     infomod(Language.succesdeletefriend);
                    }
                  }
                })
@@ -586,13 +586,13 @@
               beforeSend: function() {
                 console.log('Connecting to send petition of friend...');
                 $('#addfriendbutton').attr('disabled','disabled');
-                $('#addfriendbutton').html('Sending...');
+                $('#addfriendbutton').html(Language.sending);
               },
               success: function(result) {
                 if(result.mensaje == 'ok'){
-                  $('#addfriendbutton').html('Wait for your friend accept you');
+                  $('#addfriendbutton').html(Language.waitaccept);
                 }else{
-	               errormod('There has been an error sending friend request, try again later');
+	               errormod(Language.errorsendfriendp);
                 }
               }   
            })

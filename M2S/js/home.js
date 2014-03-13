@@ -22,7 +22,7 @@ var input = document.getElementById('search-input');
           success: function(result) {
              if(result.friends){
              if(result.friends.length == '0'){
-	            $('#people-bar #list-friends').append("<div class='no-friends'><h4>You don't have any friends yet!</h4><p>Please, add a friend for his username clicking in the plus icon of top or in the footer if you are in a mobile</p></div>"); 
+	            $('#people-bar #list-friends').append("<div class='no-friends'><h4>"+Language.nofriends+"</h4><p>"+Language.nofriendsinfo+"</p></div>"); 
              }
              for(var i = 0; i < result.friends.length; i++){
                  id = result.friends[i].id; 
@@ -61,7 +61,7 @@ function loadchat(id, type){
             dataType: 'jsonp',
             success: function(data) {
             if(data.messages.length == 0){
-             $('.'+'chat-messages .center').html('<div class="center-align"><h3><span class="icon comments-alt"></span>You have not said anything yet</h3></div>');
+             $('.'+'chat-messages .center').html('<div class="center-align"><h3><span class="icon comments-alt"></span>'+Language.nomessageschat+'</h3></div>');
             }else{
              $('.'+'chat-messages .center').html('');
             }
@@ -184,23 +184,23 @@ function crearmsmd(id,username,iduser,imgr,textmsm,locat,leido,fecha,me,stick,ta
        $('.li-chats').removeClass("active");
 	   $('#list-'+id).addClass("active");
 	   if($(window).width() <= '500'){
-	          $('.chat-messages').html('<div class="center"><div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div></div>');
+	          $('.chat-messages').html('<div class="center"><div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>'+Language.loading+'</span></div></div>');
 	           $('.chat-messages').css('display','block');
 	           $('.nav.navbar-nav li').css('display','none');
 	           username = $('.li-chats.active .name').html();
-	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Chat with '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
+	           $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">'+Language.chatwith+' '+username+'</div><span class="icon plus" data-toggle="modal" data-target="#more-share"></span></div>');
 	           $('#forw .icon.chevron-left').click(function(){
 		          $('.li-chats').removeClass("active");
 		          $('.chat-messages').css('display','none');
 		          $('.nav.navbar-nav li').css('display','inline-block');
 		          $('#forw').remove();
-		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
+		          $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>'+Language.nofriendselect+'</h3><p>'+Language.nofriendselectinfo+'</p></div></div></div>');
 	           });
        }
 	   if($('.input-chat').length){
 		   $('.input-chat').remove();
 	   }	   
-       $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" id="more-chat" data-toggle="modal" data-target="#more-share">+</button> <button class="btn btn-info" id="send-button" onclick="sendmsm('+id+')">Send</button></div>');
+       $('.'+'chat-messages').append('<div class="input-chat"><textarea class="form-control" rows="2" name="txt"></textarea> <button class="btn btn-info" id="more-chat" data-toggle="modal" data-target="#more-share">+</button> <button class="btn btn-info" id="send-button" onclick="sendmsm('+id+')">'+Language.send+'</button></div>');
        $("textarea[name='txt']").keypress(function(event) {
               if(event.keyCode == 13) {
                 if (!event.shiftKey) sendmsm()
@@ -308,7 +308,7 @@ $(document).ready(function() {
 	        }
 	        if(!$('.chat-messages').attr('style')){
 		       $('.li-chats').removeClass("active");
-		       $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
+		       $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>'+Language.nofriendselect+'</h3><p>'+Language.nofriendselectinfo+'</p></div></div></div>');
 		       if($('#map-html').lenght != '0'){
 		        $('#btn-location').html('Share location');
 	            $('#btn-location').removeClass('btn-danger');
@@ -355,7 +355,7 @@ $(document).ready(function() {
 	   $('#home').removeClass("active");
 	   $('#speop').addClass("active");
 	   $('.li-chats').removeClass("active");
-	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>No friend select</h3><p>Select one of your friends for chatting with he</p></div></div></div>');
+	   $('.chat-messages').html('<div class="foot-space"><div class="center"><div class="center-align"><h3>'+Language.nofriendselect+'</h3><p>'+Language.nofriendselectinfo+'</p></div></div></div>');
 	   $('#home').click(function(){
 		 $('#list-friends').show(); 
 	     $('#add-people').hide(); 
@@ -375,7 +375,7 @@ $(document).ready(function() {
 	   $('footer').hide();
 	   $('#spaces').css('height','20px');
 	   $('.nav.navbar-nav li').css('display','none');
-	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">Add friends</div></div>');
+	   $('#menu.nav.navbar-nav').append('<div id="forw"><span class="icon chevron-left"></span><div class="center">'+Language.addfriends+'</div></div>');
 	   $('#forw .icon.chevron-left').click(function(){
 	      $('#list-friends').show(); 
 	      $('#add-people').hide();
@@ -387,7 +387,7 @@ $(document).ready(function() {
 	 }
    }
    function submitadd(){
-	  $('.'+'people').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>Loading...</span></div>');
+	  $('.'+'people').html('<div id="loading-user"><img src="css/loading.gif" width="25px" height="25px"/> <span>'+Language.loading+'</span></div>');
 	   if(document.getElementById('person')){
 		   $('#person').remove();
 	   }
@@ -420,18 +420,18 @@ $(document).ready(function() {
              noticiaHTML = '<div id="person">';
              noticiaHTML += '<img src="'+ image + '"/>';
              noticiaHTML += '<p>'+ username +'</p>';
-             noticiaHTML += '<a href="javascript:addpeople('+ id +')"><button  class="btn btn-primary" id="addfriendb">Send request for friendship</button></a></div>';
+             noticiaHTML += '<a href="javascript:addpeople('+ id +')"><button  class="btn btn-primary" id="addfriendb">'+Language.sendrequestfriend+'</button></a></div>';
              }
              if(state == '2'){
              var searchinput = document.getElementById('search-useradd');
              var valueinput = searchinput.value; 
-             noticiaHTML = '<div id="person">' + valueinput + ' is already your friend, has blocked you or has not accepted you yet</div>';
+             noticiaHTML = '<div id="person">' + valueinput + ' '+Language.alreadyfriend+'</div>';
              }
              if(state == '3'){
-             noticiaHTML = '<div id="person">The user which you are looking for does not exist, please check you have typed it fine!</div>';
+             noticiaHTML = '<div id="person">'+Language.usernotexist+'</div>';
              }
              if(state == '4'){
-             noticiaHTML = '<div id="person">You can not add you yourself</div>';
+             noticiaHTML = '<div id="person">'+Language.addyourself+'</div>';
              }
           return noticiaHTML;
             }
@@ -447,15 +447,15 @@ $(document).ready(function() {
           beforeSend: function() {
           console.log('Connecting...');
           $('#addfriendb').attr("href", "#");
-          $('#addfriendb').html('Loading...')
+          $('#addfriendb').html(Language.loading)
           },
           success: function(result) {
             if(result.mensaje == 'ok'){
-              $('#addfriendb').html('Petition sent')
+              $('#addfriendb').html(Language.petitionfriendsend)
             }else{
 	          $('#addfriendb').html('Error'); 
 	          setInterval(function(){
-		        $('#addfriendb').html('Send friend request');   
+		        $('#addfriendb').html(Language.sendrequestfriend);   
 		        $('#addfriendb').attr("href", "javascript:addpeople("+id+")");
 	          },5000);
             }
@@ -527,7 +527,7 @@ $(document).ready(function() {
            var mapht = '<iframe marginheight="0" marginwidth="0" src="http://maps.google.com/maps?client=safari&ll='+latitud+','+longitud+'&z=14&output=embed" frameborder="0" scrolling="no" style="height: 24%;margin-top: 10px;max-height: 200px;max-width: 700px;width: 100%;" id="map-html"></iframe>';
            $('#location').append(mapht);
            $('#btn-location').removeAttr("disabled");
-           $('#btn-location').html('Remove Location');
+           $('#btn-location').html(Language.removelocation);
            $('#btn-location').removeClass('btn-info');
            $('#btn-location').addClass('btn-danger');
         }
@@ -541,9 +541,9 @@ $(document).ready(function() {
             alert("Your browser doesn't the location API");  
          }
          $('#btn-location').attr('disabled','disabled');
-         $('#btn-location').html('Getting your location...');
+         $('#btn-location').html(Language.locationloading);
         }else{
-	     $('#btn-location').html('Share location');
+	     $('#btn-location').html(Language.sharelocation);
 	     $('#btn-location').removeClass('btn-danger');
          $('#btn-location').addClass('btn-info'); 
          $('#map-html').remove();

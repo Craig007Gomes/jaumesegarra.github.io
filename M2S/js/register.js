@@ -51,21 +51,21 @@ function register() {
                      })
 	             };
 	             if(result.mensaje == 'e2'){
-	                errormod('The passwords do not match');
+	                errormod(Language.passnotmatch);
 	             };
 	             if(result.mensaje == 'e3'){
-	                errormod('The username has been registered in M2S formerly');
+	                errormod(Language.userregisterlater);
 	             };
 	             if(result.mensaje == 'e4'){
-	                errormod('The email has been registered in M2S formerly');
+	                errormod(Language.emailregisterlater);
 	             };
 	             if(result.mensaje == 'e6'){
-	                errormod("Required fields hasn't been introduced");
+	                errormod(Language.requiredfieldsnotenter);
 	             }
              }
           }
     })
     }else{
-	    errormod('The passwords do not match');
+	    errormod(Language.passnotmatch);
     }
 }
